@@ -6,6 +6,7 @@ import Nav from './common/Nav';
 import Home from './routes/Home';
 import About from './routes/About';
 import NotFound from './routes/NotFound';
+import ProductDetail from './routes/ProductDetail/productDetail';
 
 import './style.scss';
 
@@ -16,6 +17,7 @@ ReactDOM.render(
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/about" component={About} />
+        <Route path="/product-detail" component={ProductDetail} />
         <Route component={NotFound} />
       </Switch>
     </div>
