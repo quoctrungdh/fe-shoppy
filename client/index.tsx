@@ -7,6 +7,7 @@ import Home from './routes/Home';
 import About from './routes/About';
 import ProductList from './routes/ProductList';
 import NotFound from './routes/NotFound';
+import ProductDetail from './routes/ProductDetail/productDetail';
 
 import './style.scss';
 
@@ -17,7 +18,11 @@ ReactDOM.render(
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/about" component={About} />
+<<<<<<< HEAD
         <Route path="/products" component={ProductList} />
+=======
+        <Route path="/product-detail" component={ProductDetail} />
+>>>>>>> feat:(first)-start product detail page
         <Route component={NotFound} />
       </Switch>
     </div>
