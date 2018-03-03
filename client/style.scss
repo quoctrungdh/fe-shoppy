@@ -1,6 +1,7 @@
 @import 'variables';
 @import 'common/loading';
 @import 'routes/productList';
+@import './routes/ProductDetail/productDetail.scss';
 
 // Normalizer
 h1,
@@ -10,6 +11,7 @@ h4,
 h5,
 h6,
 p,
+
 body {
   margin: 0;
   padding: 0;
