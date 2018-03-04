@@ -1,0 +1,9 @@
+.nav {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+
+	&__item {
+		margin-right: $size-small;
+	}
+}

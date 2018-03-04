@@ -5,11 +5,14 @@
   "author": "quoctrungdh <quoctrungdh@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "formik": "^0.11.11",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "eslint": "^4.18.1",
