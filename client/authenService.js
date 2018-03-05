@@ -1,14 +1,11 @@
+import Storage from './storage';
+
+const userInfoStorage = Storage('user-info');
+
 let listeners = [];
 
-const userInfoNameSpace = 'user-info';
-
-let userInfo = (() => {
-  const dataString = localStorage.getItem(userInfoNameSpace);
-  const info = dataString === null || dataString === undefined ? null : JSON.parse(dataString);
-
-  // TODO: check token
-  return info;
-})();
+let userInfo = userInfoStorage.load() || null;
+// TODO: check token
 
 const authenService = {
   getUserInfo: () => userInfo,
@@ -16,9 +13,9 @@ const authenService = {
     userInfo = info;
 
     if (info) {
-      localStorage.setItem(userInfoNameSpace, JSON.stringify(info));
+      userInfoStorage.save(info);
     } else {
-      localStorage.removeItem(userInfoNameSpace);
+      userInfoStorage.clear();
     }
 
     listeners.forEach(l => l());
@@ -33,8 +30,6 @@ const authenService = {
 };
 
 export default authenService;
-
-// TODO: refactor localStorage to support more browser mode
 
 // https://github.com/quanla/pure-react-sample-realworld/blob/master/src/client/realworld-app/authen/user-info
 // https://addyosmani.com/resources/essentialjsdesignpatterns/book/#observerpatternjavascript

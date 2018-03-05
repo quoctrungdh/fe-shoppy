@@ -17,6 +17,8 @@ const request = {
 
   // },
 };
+// https://css-tricks.com/importance-javascript-abstractions-working-remote-data/
+// https://addyosmani.com/resources/essentialjsdesignpatterns/book/#modulepatternjavascript
 
 const Auth = {
   register: (username, email, password) => request.post('/users', { user: { username, email, password } }),
@@ -40,4 +42,3 @@ export default {
 };
 
 // https://github.com/gothinkster/react-redux-realworld-example-app/blob/master/src/agent.js
-// https://css-tricks.com/importance-javascript-abstractions-working-remote-data/
