@@ -1,5 +1,8 @@
+@import './variables.scss';
 @import './routes/ProductDetail/productDetail.scss';
+@import 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css';
+@import 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css';
 
 body {
-	color: blue;
+	color: $color-text;
 }
