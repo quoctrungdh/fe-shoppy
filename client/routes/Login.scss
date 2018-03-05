@@ -1,10 +1,12 @@
-.login {
+.login,
+.register {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 }
 
-.loginForm {
+.loginForm,
+.registerForm {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
