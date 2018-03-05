@@ -1,0 +1,10 @@
+{
+	"productId": "0001",
+	"name": "nike-01",
+	"price": 300,
+	"isFavorite": true,
+	"imageUrl": ["hhh.jpg"],
+	"sizes": ["42", "43", "45"],
+	"colors": ["red", "gray", "pink"],
+	"description": "fdshksdhfkdshfsd fhdsskjjfhsdk fdhskfh fdshsfkjdjhskfbdsk dfsshfkjdjshf"
+}
