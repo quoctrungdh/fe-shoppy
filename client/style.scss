@@ -2,6 +2,8 @@
 @import 'common/loading';
 @import 'routes/productList';
 @import './routes/ProductDetail/productDetail.scss';
+@import 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css';
+@import 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css';
 
 // Normalizer
 h1,
@@ -11,7 +13,6 @@ h4,
 h5,
 h6,
 p,
-
 body {
   margin: 0;
   padding: 0;
@@ -59,4 +60,5 @@ img {
 button {
   outline: 0;
   padding: .5rem 1rem;
+	color: $color-text;
 }

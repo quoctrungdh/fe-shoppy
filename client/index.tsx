@@ -18,11 +18,8 @@ ReactDOM.render(
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/about" component={About} />
-<<<<<<< HEAD
         <Route path="/products" component={ProductList} />
-=======
         <Route path="/product-detail" component={ProductDetail} />
->>>>>>> feat:(first)-start product detail page
         <Route component={NotFound} />
       </Switch>
     </div>
