@@ -18,7 +18,7 @@ const productList = [
     price: 300,
     isFavorite: true,
     imageUrl: '',
-    sizes: ["42", "43", "44", "45"],
+    sizes: [42, 43, 44, 45],
     colors: ["red", "gray", "pink", "black"],
     description: "fdshksdhfkdshfsd fhdsskjjfhsdk fdhskfh fdshsfkjdjhskfbdsk dfsshfkjdjshf"
   },
@@ -28,7 +28,7 @@ const productList = [
     price: 300,
     isFavorite: true,
     imageUrl: '',
-    sizes: ["42", "43", "44", "45"],
+    sizes: [42, 43, 44, 45],
     colors: ["red", "gray", "pink", "black"],
     description: "fdshksdhfkdshfsd fhdsskjjfhsdk fdhskfh fdshsfkjdjhskfbdsk dfsshfkjdjshf"
   },
@@ -38,7 +38,7 @@ const productList = [
     price: 300,
     isFavorite: true,
     imageUrl: '',
-    sizes: ["42", "43", "44", "45"],
+    sizes: [42, 43, 44, 45],
     colors: ["red", "gray", "pink", "black"],
     description: "fdshksdhfkdshfsd fhdsskjjfhsdk fdhskfh fdshsfkjdjhskfbdsk dfsshfkjdjshf"
   },
@@ -48,7 +48,7 @@ const productList = [
     price: 300,
     isFavorite: true,
     imageUrl: '',
-    sizes: ["42", "43", "44", "45"],
+    sizes: [42, 43, 44, 45],
     colors: ["red", "gray", "pink", "black"],
     description: "fdshksdhfkdshfsd fhdsskjjfhsdk fdhskfh fdshsfkjdjhskfbdsk dfsshfkjdjshf"
   },
@@ -58,7 +58,7 @@ const productList = [
     price: 300,
     isFavorite: true,
     imageUrl: '',
-    sizes: ["42", "43", "44", "45"],
+    sizes: [42, 43, 44, 45],
     colors: ["red", "gray", "pink", "black"],
     description: "fdshksdhfkdshfsd fhdsskjjfhsdk fdhskfh fdshsfkjdjhskfbdsk dfsshfkjdjshf"
   },
@@ -68,24 +68,85 @@ const productList = [
     price: 300,
     isFavorite: true,
     imageUrl: '',
-    sizes: ["42", "43", "44", "45"],
+    sizes: [42, 43, 44, 45],
     colors: ["red", "gray", "pink", "black"],
     description: "fdshksdhfkdshfsd fhdsskjjfhsdk fdhskfh fdshsfkjdjhskfbdsk dfsshfkjdjshf"
   }
 ]
 
-export default function ProductList() {
-  return (
-    <div>
-      <h1>ProductList</h1>
-      <div className="flex-row">
+// export default function ProductList() {
+//   console.log(productList)
+//   return (
+//     <div>
+//       <h1>ProductList</h1>
+//       <div className="flex-row">
+//         {
+//           productList.map((item:Product) => (
+//             <div className="flex-item">
+//             {item.price}
+//             </div>
+//           ))
+//         }
+//       </div>
+//     </div>
+//   )
+// }
+
+const timeOut = 2000;
+
+const api = {
+  getProducts(url) {
+    // return fetch(url, {
+    //   method: 'get'
+    // })
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(productList)
+        // reject(new Error('Can not get products'))
+      }, timeOut);
+    })
+  }
+}
+
+export default class ProductList extends React.Component {
+  state = {
+    isLoading: false,
+    productsList: [],
+    error: null
+  }
+
+  componentDidMount() {
+    this.setState({ isLoading: true })
+    api.getProducts()
+      .then(data => this.setState({ productsList: data }))
+      .catch(err => this.setState({ error: err }))
+      .finally(() => this.setState({ isLoading: false }))
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>ProductList</h1>
+        <div className="flex-row">
         {
-          productList.map((item:Product) => (
-            <div className="flex-item">
-            </div>
-          ))
+          this.state.error && 
+          <p>{this.state.error.message}</p>
         }
+        {
+          this.state.isLoading && 
+          <p>...loading</p>
+        }
+          {
+            this.state.productsList.map((item:Product) => (
+              <div className="flex-item" key={item.productId}>
+                <h3 className="product__name">{item.name}</h3>
+
+                {item.price}
+              </div>
+            ))
+          }
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
