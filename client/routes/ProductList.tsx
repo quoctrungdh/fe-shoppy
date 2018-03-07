@@ -142,6 +142,7 @@ export default class ProductList extends React.Component {
                 <h3 className="product__name">{item.name}</h3>
 
                 {item.price}
+                {item.name}
               </div>
             ))
           }
