@@ -5,7 +5,7 @@ import { BrowserRouter, Switch, Route, RouteComponentProps } from 'react-router-
 import Nav from './common/Nav';
 import Home from './routes/Home';
 import About from './routes/About';
-import Products from './routes/Products';
+import ProductList from './routes/ProductList';
 import NotFound from './routes/NotFound';
 
 import './style.scss';
@@ -17,7 +17,7 @@ ReactDOM.render(
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/about" component={About} />
-        <Route path="/products" component={Products} />
+        <Route path="/products" component={ProductList} />
         <Route component={NotFound} />
       </Switch>
     </div>
