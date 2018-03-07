@@ -74,31 +74,10 @@ const productList = [
   }
 ]
 
-// export default function ProductList() {
-//   console.log(productList)
-//   return (
-//     <div>
-//       <h1>ProductList</h1>
-//       <div className="flex-row">
-//         {
-//           productList.map((item:Product) => (
-//             <div className="flex-item">
-//             {item.price}
-//             </div>
-//           ))
-//         }
-//       </div>
-//     </div>
-//   )
-// }
-
 const timeOut = 2000;
 
 const api = {
-  getProducts(url) {
-    // return fetch(url, {
-    //   method: 'get'
-    // })
+  getProducts() {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(productList)
@@ -108,7 +87,7 @@ const api = {
   }
 }
 
-export default class ProductList extends React.Component {
+export default class ProductList extends React.Component<{}, {}> {
   state = {
     isLoading: false,
     productsList: [],
@@ -118,8 +97,8 @@ export default class ProductList extends React.Component {
   componentDidMount() {
     this.setState({ isLoading: true })
     api.getProducts()
-      .then(data => this.setState({ productsList: data }))
-      .catch(err => this.setState({ error: err }))
+      .then((data:Product) => this.setState({ productsList: data }))
+      .catch((err:string) => this.setState({ error: err }))
       .finally(() => this.setState({ isLoading: false }))
   }
 
@@ -128,14 +107,14 @@ export default class ProductList extends React.Component {
       <div>
         <h1>ProductList</h1>
         <div className="flex-row">
-        {
-          this.state.error && 
-          <p>{this.state.error.message}</p>
-        }
-        {
-          this.state.isLoading && 
-          <p>...loading</p>
-        }
+          {
+            this.state.error && 
+            <p>{this.state.error.message}</p>
+          }
+          {
+            this.state.isLoading && 
+            <p>...loading</p>
+          }
           {
             this.state.productsList.map((item:Product) => (
               <div className="flex-item" key={item.productId}>
