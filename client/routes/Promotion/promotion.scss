@@ -1,0 +1,36 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+.form {
+  &__input,
+  &__button {
+    float: left;
+    border-radius: 0;
+    padding: 5px 15px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ddd;
+    outline: none;
+  }
+  &__button {
+    background-color: #f36b2d;
+    color: #fff;
+    margin-left: 5px;
+    transition: all 0.25s;
+    cursor: pointer;
+    &:hover {
+      color: #000;
+      background-color: #ff0;
+    }
+  }
+}
+.error-message {
+  color: #f70000;
+  clear: both;
+  font-size: 12px;
+}
+.success-message {
+  color: blue;
+  clear: both;
+  font-size: 12px;
+}
