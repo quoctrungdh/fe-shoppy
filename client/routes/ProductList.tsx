@@ -9,6 +9,7 @@ interface Product {
   sizes:number[];
   colors:string[];
   description:string;
+  type:string;
 }
 
 const productList = [
@@ -17,10 +18,11 @@ const productList = [
     name: "nike-01",
     price: 300,
     isFavorite: true,
-    imageUrl: '',
-    sizes: [42, 43, 44, 45],
+    imageUrl: '../assets/images/shoes1.png',
+    sizes: ["42", "43", "44", "45"],
     colors: ["red", "gray", "pink", "black"],
-    description: "fdshksdhfkdshfsd fhdsskjjfhsdk fdhskfh fdshsfkjdjhskfbdsk dfsshfkjdjshf"
+    description: "fdshksdhfkdshfsd fhdsskjjfhsdk fdhskfh fdshsfkjdjhskfbdsk dfsshfkjdjshf",
+    type: "shoes"
   },
   {
     productId: "0002",
@@ -28,9 +30,10 @@ const productList = [
     price: 300,
     isFavorite: true,
     imageUrl: '',
-    sizes: [42, 43, 44, 45],
+    sizes: ["42", "43", "44", "45"],
     colors: ["red", "gray", "pink", "black"],
-    description: "fdshksdhfkdshfsd fhdsskjjfhsdk fdhskfh fdshsfkjdjhskfbdsk dfsshfkjdjshf"
+    description: "fdshksdhfkdshfsd fhdsskjjfhsdk fdhskfh fdshsfkjdjhskfbdsk dfsshfkjdjshf",
+    type: "shoes"
   },
   {
     productId: "0003",
@@ -38,9 +41,10 @@ const productList = [
     price: 300,
     isFavorite: true,
     imageUrl: '',
-    sizes: [42, 43, 44, 45],
+    sizes: ["42", "43", "44", "45"],
     colors: ["red", "gray", "pink", "black"],
-    description: "fdshksdhfkdshfsd fhdsskjjfhsdk fdhskfh fdshsfkjdjhskfbdsk dfsshfkjdjshf"
+    description: "fdshksdhfkdshfsd fhdsskjjfhsdk fdhskfh fdshsfkjdjhskfbdsk dfsshfkjdjshf",
+    type: "shoes"
   },
   {
     productId: "0004",
@@ -48,9 +52,10 @@ const productList = [
     price: 300,
     isFavorite: true,
     imageUrl: '',
-    sizes: [42, 43, 44, 45],
+    sizes: ["42", "43", "44", "45"],
     colors: ["red", "gray", "pink", "black"],
-    description: "fdshksdhfkdshfsd fhdsskjjfhsdk fdhskfh fdshsfkjdjhskfbdsk dfsshfkjdjshf"
+    description: "fdshksdhfkdshfsd fhdsskjjfhsdk fdhskfh fdshsfkjdjhskfbdsk dfsshfkjdjshf",
+    type: "shoes"
   },
   {
     productId: "0005",
@@ -58,9 +63,10 @@ const productList = [
     price: 300,
     isFavorite: true,
     imageUrl: '',
-    sizes: [42, 43, 44, 45],
+    sizes: ["42", "43", "44", "45"],
     colors: ["red", "gray", "pink", "black"],
-    description: "fdshksdhfkdshfsd fhdsskjjfhsdk fdhskfh fdshsfkjdjhskfbdsk dfsshfkjdjshf"
+    description: "fdshksdhfkdshfsd fhdsskjjfhsdk fdhskfh fdshsfkjdjhskfbdsk dfsshfkjdjshf",
+    type: "shoes"
   },
   {
     productId: "0006",
@@ -68,9 +74,10 @@ const productList = [
     price: 300,
     isFavorite: true,
     imageUrl: '',
-    sizes: [42, 43, 44, 45],
+    sizes: ["42", "43", "44", "45"],
     colors: ["red", "gray", "pink", "black"],
-    description: "fdshksdhfkdshfsd fhdsskjjfhsdk fdhskfh fdshsfkjdjhskfbdsk dfsshfkjdjshf"
+    description: "fdshksdhfkdshfsd fhdsskjjfhsdk fdhskfh fdshsfkjdjhskfbdsk dfsshfkjdjshf",
+    type: "shoes"
   }
 ]
 
@@ -118,10 +125,12 @@ export default class ProductList extends React.Component<{}, {}> {
           {
             this.state.productsList.map((item:Product) => (
               <div className="flex-item" key={item.productId}>
+                <p className="product__type">{item.type}</p>
                 <h3 className="product__name">{item.name}</h3>
-
-                {item.price}
-                {item.name}
+                <img src="item.imageUrl" alt="" className="product__image" />
+                <p className="product__price">{item.price}</p>
+                <img src="{item.isFavorite ? '../assets/images/like_active_icon.png' : '../assets/images/like_icon.png'}" alt="" className="product__like-status" />
+                <button type="button"><img src="../assets/images/bag_icon.png" alt="" className="product__cart-button" /></button>
               </div>
             ))
           }
