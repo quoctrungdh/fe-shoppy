@@ -12,19 +12,19 @@ import * as PackgageActiveIcon from '../assets/images/package_active_icon.png';
 import { Link } from 'react-router-dom';
 
 interface Product {
-  productId:string;
-  name:string;
-  price:number;
-  isFavorite:boolean;
-  inPackage:boolean;
-  imageUrl:string;
-  sizes:number[];
-  colors:string[];
-  description:string;
-  type:string;
+  productId: string;
+  name: string;
+  price: number;
+  isFavorite: boolean;
+  inPackage: boolean;
+  imageUrl: string;
+  sizes: number[];
+  colors: string[];
+  description: string;
+  type: string;
 }
 
-const productList = [
+const productList: Product[] = [
   {
     productId: "0001",
     name: "nike-01",
@@ -99,14 +99,13 @@ const productList = [
   }
 ]
 
-const timeOut = 2000;
+const timeOut: number = 2000;
 
 const api = {
   getProducts() {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(productList)
-        // reject(new Error('Can not get products'))
       }, timeOut);
     })
   }
@@ -115,14 +114,25 @@ const api = {
 export default class ProductList extends React.Component<{}, {}> {
   state = {
     isLoading: false,
-    productsList: [],
-    error: null
+    productList: [],
+    error: null,
+    isShowGrid: true,
+  }
+
+  setFavorite(index: number):void {
+    const productList:Product[] = this.state.productList;
+    productList[index].isFavorite = !productList[index].isFavorite;
+    this.setState({ productList });
+  }
+
+  setGrid():void {
+    this.setState({ isShowGrid: !this.state.isShowGrid });
   }
 
   componentDidMount() {
     this.setState({ isLoading: true })
     api.getProducts()
-      .then((data:Product) => this.setState({ productsList: data }))
+      .then((data:Product) => this.setState({ productList: data }))
       .catch((err:string) => this.setState({ error: err }))
       .finally(() => this.setState({ isLoading: false }))
   }
@@ -131,7 +141,19 @@ export default class ProductList extends React.Component<{}, {}> {
     return (
       <div>
         <h1>ProductList</h1>
-        <div className="flex-row">
+        <p className="text-right">
+          <button
+            type="button"
+            className={`flex ${this.state.isShowGrid ? '': 'active'}`}
+            onClick={() => this.setGrid()}
+          >List</button>
+          <button
+            type="button"
+            className={`flex ${this.state.isShowGrid ? 'active': ''}`}
+            onClick={() => this.setGrid()}
+          >Grid</button>
+        </p>
+        <div className={`flex ${this.state.isShowGrid ? 'row': ''}`}>
           {
             this.state.error &&
             <p>{this.state.error.message}</p>
@@ -141,15 +163,20 @@ export default class ProductList extends React.Component<{}, {}> {
             <p>...loading</p>
           }
           {
-            this.state.productsList.map((item:Product) => (
+            this.state.productList.map((item:Product, index:number) => (
               <div className="flex-item text-center" key={item.productId}>
                 <div className="product__box">
                   <p className="product__type">{item.type}</p>
                   <h3 className="product__name">{item.name}</h3>
                   <img src={item.imageUrl} alt="Product lists" className="product__image" />
                   <p className="product__price">${item.price}</p>
-                  <Link to="" className="product__favorite-icon"><img src={item.isFavorite ? FavoriteActiveIcon : FavoriteIcon} alt="Favorite icon " /></Link>
-                  <Link to="" className="product__package-icon"><img src={item.inPackage ? PackgageActiveIcon : PackgageIcon} alt="Package icon" /></Link>
+                  <button
+                    className="product__favorite-icon product__top-icon"
+                    onClick={() => this.setFavorite(index)}
+                  >
+                    <img src={item.isFavorite ? FavoriteActiveIcon : FavoriteIcon} alt="Favorite icon " />
+                  </button>
+                  <Link to="" className="product__package-icon product__top-icon"><img src={item.inPackage ? PackgageActiveIcon : PackgageIcon} alt="Package icon" /></Link>
                 </div>
               </div>
             ))
