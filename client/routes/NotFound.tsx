@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 function NotFound() {
   return <h1>NotFound</h1>;

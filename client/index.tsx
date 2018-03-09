@@ -1,12 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import { BrowserRouter, Switch, Route, RouteComponentProps } from 'react-router-dom';
 
 import Nav from './common/Nav';
 import Home from './routes/Home';
 import About from './routes/About';
 import NotFound from './routes/NotFound';
-import Promotion from './routes/Promotion.jsx';
+import Promotion from './routes/Promotion';
 
 import './style.scss';
 

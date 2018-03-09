@@ -1,16 +1,20 @@
 {
   "name": "fe-shoppy",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.jsx",
   "author": "quoctrungdh <quoctrungdh@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@types/react": "^16.0.40",
+    "@types/react-dom": "^16.0.4",
+    "@types/react-select": "^1.2.4",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-router-dom": "^4.2.2",
     "react-select": "^1.2.1"
   },
   "devDependencies": {
+    "@types/react-router-dom": "^4.2.4",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "eslint": "^4.18.1",
@@ -19,7 +23,11 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
     "node-sass": "^4.7.2",
-    "parcel-bundler": "^1.6.2"
+    "parcel-bundler": "^1.6.2",
+    "tslint-config-airbnb": "^5.7.0",
+    "tslint-config-prettier": "^1.9.0",
+    "tslint-react": "^3.5.1",
+    "typescript": "^2.7.2"
   },
   "scripts": {
     "start": "parcel client/index.html"

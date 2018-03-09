@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from "react";
 
 function About() {
   return <h1>About</h1>;
