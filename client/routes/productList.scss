@@ -9,6 +9,7 @@
 }
 
 .flex {
+  animation: fadeInUp 2.5s linear forwards;
   &.row {
     display: flex;
     flex-flow: row wrap;
@@ -59,5 +60,23 @@
 
   &__package-icon {
     right: 1rem;
+  }
+}
+
+.btn-product-display {
+  &.active {
+    background-color: $color-royal-blue;
+    color: $color-white;
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    transform: translateY(10rem);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
   }
 }

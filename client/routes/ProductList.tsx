@@ -1,4 +1,13 @@
+//Lib
 import * as React from 'react';
+import { Link } from 'react-router-dom';
+
+//Component
+import Loading from '../common/Loading';
+import ProductListControl from '../component/ProductListControl';
+import Pagination from '../component/Pagination';
+
+//Image
 import * as ProductImage1 from '../assets/images/shoes1.png';
 import * as ProductImage2 from '../assets/images/shoes2.png';
 import * as ProductImage3 from '../assets/images/shoes3.png';
@@ -9,7 +18,6 @@ import * as FavoriteIcon from '../assets/images/favorite_icon.png';
 import * as FavoriteActiveIcon from '../assets/images/favorite_active_icon.png';
 import * as PackgageIcon from '../assets/images/package_icon.png';
 import * as PackgageActiveIcon from '../assets/images/package_active_icon.png';
-import { Link } from 'react-router-dom';
 
 interface Product {
   productId: string;
@@ -111,7 +119,7 @@ const api = {
   }
 }
 
-export default class ProductList extends React.Component<{}, {}> {
+export default class ProductList extends React.Component {
   state = {
     isLoading: false,
     productList: [],
@@ -119,12 +127,19 @@ export default class ProductList extends React.Component<{}, {}> {
     isShowGrid: true,
   }
 
+  /***
+   * Function: update display clicked like icon
+   * Parameter: index number of product in array
+   */
   setFavorite(index: number):void {
     const productList:Product[] = this.state.productList;
     productList[index].isFavorite = !productList[index].isFavorite;
     this.setState({ productList });
   }
 
+  /**
+   * Function: update display product list
+  */
   setGrid():void {
     this.setState({ isShowGrid: !this.state.isShowGrid });
   }
@@ -140,48 +155,54 @@ export default class ProductList extends React.Component<{}, {}> {
   render() {
     return (
       <div>
-        <h1>ProductList</h1>
-        <p className="text-right">
-          <button
-            type="button"
-            className={`flex ${this.state.isShowGrid ? '': 'active'}`}
-            onClick={() => this.setGrid()}
-          >List</button>
-          <button
-            type="button"
-            className={`flex ${this.state.isShowGrid ? 'active': ''}`}
-            onClick={() => this.setGrid()}
-          >Grid</button>
-        </p>
-        <div className={`flex ${this.state.isShowGrid ? 'row': ''}`}>
-          {
-            this.state.error &&
+        {
+          this.state.error &&
+          <div>
             <p>{this.state.error.message}</p>
-          }
-          {
-            this.state.isLoading &&
-            <p>...loading</p>
-          }
+            <p className="text-center">
+              <Link to="/products">Reload</Link>
+            </p>
+          </div>
+        }
+        {
+          this.state.isLoading &&
+          <Loading />
+        }
+        <h1>ProductList</h1>
+        <ProductListControl
+          isShowGrid={this.state.isShowGrid}
+          onControlClick={() => this.setGrid()}
+        />
+        <div className={`flex ${this.state.isShowGrid ? 'row': ''}`}>
           {
             this.state.productList.map((item:Product, index:number) => (
               <div className="flex-item text-center" key={item.productId}>
                 <div className="product__box">
                   <p className="product__type">{item.type}</p>
                   <h3 className="product__name">{item.name}</h3>
-                  <img src={item.imageUrl} alt="Product lists" className="product__image" />
+                  <img src={item.imageUrl} alt={item.name} className="product__image" />
                   <p className="product__price">${item.price}</p>
                   <button
                     className="product__favorite-icon product__top-icon"
                     onClick={() => this.setFavorite(index)}
                   >
-                    <img src={item.isFavorite ? FavoriteActiveIcon : FavoriteIcon} alt="Favorite icon " />
+                    <img
+                      src={item.isFavorite ? FavoriteActiveIcon : FavoriteIcon}
+                      alt="Favorite icon"
+                    />
                   </button>
-                  <Link to="" className="product__package-icon product__top-icon"><img src={item.inPackage ? PackgageActiveIcon : PackgageIcon} alt="Package icon" /></Link>
+                  <Link to="/" className="product__package-icon product__top-icon">
+                    <img
+                      src={item.inPackage ? PackgageActiveIcon : PackgageIcon}
+                      alt="Package icon"
+                    />
+                  </Link>
                 </div>
               </div>
             ))
           }
         </div>
+        <Pagination pageCounts={this.state.productList.length} />
       </div>
     )
   }

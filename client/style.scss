@@ -1,4 +1,5 @@
 @import 'variables';
+@import 'common/loading';
 @import 'routes/productList';
 
 // Normalizer
@@ -51,4 +52,9 @@ img {
 
 * {
   box-sizing: border-box;
+}
+
+button {
+  outline: 0;
+  padding: .5rem 1rem;
 }
