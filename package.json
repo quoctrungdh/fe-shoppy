@@ -60,6 +60,6 @@
   "scripts": {
     "start": "npm run start-dev-server & npm run start-dev-client",
     "start-dev-client": "parcel client/index.html",
-    "start-dev-server": "NODE_ENV=development nodemon server/index.js"
+    "start-dev-server": "SET NODE_ENV=development nodemon server/index.js"
   }
 }
