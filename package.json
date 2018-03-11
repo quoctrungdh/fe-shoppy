@@ -34,9 +34,6 @@
     "recompose": "^0.26.0",
     "winston": "^2.4.1",
     "classnames": "^2.2.5",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-router-dom": "^4.2.2",
     "react-slick": "^0.19.0"
   },
   "devDependencies": {
@@ -60,6 +57,6 @@
   "scripts": {
     "start": "npm run start-dev-server & npm run start-dev-client",
     "start-dev-client": "parcel client/index.html",
-    "start-dev-server": "NODE_ENV=development nodemon server/index.js"
+    "start-dev-server": "SET NODE_ENV=development nodemon server/index.js"
   }
 }
