@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import classNames from 'classnames';
+import * as React from 'react';
+import * as classNames from 'classnames';
 import Slider from 'react-slick';
 
 const data = {
@@ -32,16 +32,24 @@ const settings = {
   centerPadding: "10px",
 }
 
-class ProductDetail extends React.Component {
-	constructor(props) {
-		super(props);
+interface IMyComponentProps {
+  someDefaultValue?: string,
+}
+
+interface IMyComponentState {
+  img?: string
+}
+
+class ProductDetail extends React.Component<IMyComponentProps, IMyComponentState> {
+	constructor(props: IMyComponentProps) {
+    super(props);
 		this.state = {
 			img: data.imageUrl
     }
     this.onClickTochangeColor = this.onClickTochangeColor.bind(this);
   }
 
-  onClickTochangeColor(e) {
+  onClickTochangeColor(e: any) {
     e.preventDefault();
     this.setState({
       img: changeColorAPI.imageUrl
