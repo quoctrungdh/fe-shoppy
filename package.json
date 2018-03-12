@@ -7,27 +7,52 @@
   "dependencies": {
     "@types/react": "^16.0.40",
     "@types/react-dom": "^16.0.4",
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.18.2",
+    "colors": "^1.2.1",
+    "compression": "^1.7.2",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.4",
+    "debug": "^3.1.0",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.2",
+    "express-validation": "^1.0.2",
+    "express-winston": "^2.5.0",
+    "helmet": "^3.12.0",
+    "http-status": "^1.0.1",
+    "joi": "^13.1.2",
+    "method-override": "^2.3.10",
+    "moment": "^2.21.0",
+    "mongoose": "^5.0.9",
+    "mongoose-url-slugs": "^1.0.2",
+    "morgan": "^1.9.0",
+    "node-notifier": "^5.2.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-router-dom": "^4.2.2"
+    "react-router-dom": "^4.2.2",
+    "winston": "^2.4.1"
   },
   "devDependencies": {
     "@types/react-router-dom": "^4.2.4",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
-    "eslint": "^4.18.1",
+    "cross-env": "^5.1.4",
+    "eslint": "^4.18.2",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.9.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
-    "node-sass": "^4.7.2",
+    "node-sass": "^4.8.1",
     "parcel-bundler": "^1.6.2",
+    "tslint": "^5.9.1",
     "tslint-config-airbnb": "^5.7.0",
     "tslint-config-prettier": "^1.9.0",
     "tslint-react": "^3.5.1",
     "typescript": "^2.7.2"
   },
   "scripts": {
-    "start": "parcel client/index.html"
+    "start": "npm run start-dev-server & npm run start-dev-client",
+    "start-dev-client": "parcel client/index.html",
+    "start-dev-server": "NODE_ENV=development node server/index.js"
   }
 }
