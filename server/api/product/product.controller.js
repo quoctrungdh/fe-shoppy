@@ -56,9 +56,14 @@ function update(req, res, next) {
  * @returns {Product[]}
  */
 function list(req, res, next) {
-  const { limit = 50, skip = 0 } = req.query;
-  Product.list({ limit, skip })
-    .then(products => res.json(products))
+  const {
+    where = '', page = 0, hitsPerPage = 10, skip = hitsPerPage * page,
+  } = req.query;
+  Product.list({ where, hitsPerPage, skip })
+    .then(products => res.json({
+      hits: products,
+      page,
+    }))
     .catch(e => next(e));
 }
 /**

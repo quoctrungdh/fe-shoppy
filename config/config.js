@@ -7,8 +7,8 @@ const config = {
   port: 1235,
   mongo: {
     mongoUri: process.env.MONGO_URL
-    || 'mongodb://shoppyadmin:adminshoppy@ds153778.mlab.com:53778/shoppy',
-    // || 'mongodb://localhost:27017/fe-shoppy',
+    // || 'mongodb://shoppyadmin:adminshoppy@ds153778.mlab.com:53778/shoppy',
+    || 'mongodb://localhost:27017/fe-shoppy',
     port: 27017,
     debug: true,
   },

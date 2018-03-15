@@ -1,6 +1,7 @@
 //Lib
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import { compose } from 'recompose';
 
 //Component
 import Loading from '../common/Loading';
@@ -23,113 +24,251 @@ interface Product {
     sku: string;
     name: string;
     price: number;
-    isFavorite: boolean;
-    inPackage: boolean;
     images: string;
     sizes: number[];
     colors: string[];
     description: string;
     type: string;
 }
+const WhenLoadedMoreData = (result) => (prevState) => ({
+    hits: [...prevState.hits, ...result.hits],
+    page: result.page,
+    isError: false,
+    isLoading: false,
+});
 
-const api = {
-  getProducts() {
-    return new Promise((resolve, reject) => {
-      fetch('http://localhost:1235/api/product').then(productList => {
-          resolve(productList.json())
-      });
-    })
-  }
-}
+const WhenLoadedInitData = (result) => (prevState) => ({
+    hits: result.hits,
+    page: result.page,
+    isError: false,
+    isLoading: false,
+});
+
+const whenLoadMoreFail = (prevState) => ({
+    isError: true,
+    isLoading: false,
+});
+
+const queriesCombiner = (where) => {
+    return {
+        name: where
+    }
+};
+
+// hàm tạo url tới api để lấy danh sách product
+const getProductsUrl = (where:string, page:number, hitsPerPage:number) =>
+    `http://localhost:1235/api/product?where=${JSON.stringify(queriesCombiner(where))}&page=${page}&hitsPerPage=${hitsPerPage}`;
 
 export default class ProductList extends React.Component {
-  state = {
-    isLoading: false,
-    productList: [],
-    error: null,
-    isShowGrid: true,
-  }
+    constructor(props) {
+        super(props);
 
-  /***
-   * Function: update display clicked like icon
-   * Parameter: index number of product in array
-   */
-  setFavorite(index: number):void {
-    const productList:Product[] = this.state.productList;
-    productList[index].isFavorite = !productList[index].isFavorite;
-    this.setState({ productList });
-  }
+        this.state = {
+            hits: [],
+            page: null,
+            isLoading: false,
+            isError: false,
+            isShowGrid: true,
+        };
+    }
 
-  /**
-   * Function: update display product list
-  */
+    onInitialSearch = (e) => {
+        e.preventDefault();
+
+        const { value } = this.input;
+
+        if (value === '') {
+            return;
+        }
+
+        this.fetchProducts(value, 0);
+    };
+
+    onPaginatedSearch = (e) =>
+        this.fetchProducts(this.input.value, parseInt(this.state.page, 10) + 1);
+
+    fetchProducts = (where, page, hitsPerPage = 10) => {
+        this.setState({ isLoading: true });
+        fetch(getProductsUrl(where, page, hitsPerPage))
+            .then(response => response.json())
+            .then(result => {
+                this.applyProductData(result, page)
+            })
+            .catch(this.onFailed);
+    };
+
+    applyProductData = (result, page) => {
+        page === 0
+            ? this.setState(WhenLoadedInitData(result))
+            : this.setState(WhenLoadedMoreData(result));
+    };
+
+    onFailed = () =>
+        this.setState(whenLoadMoreFail);
+
   setGrid():void {
     this.setState({ isShowGrid: !this.state.isShowGrid });
   }
 
-  componentDidMount() {
-    this.setState({ isLoading: true })
-    api.getProducts()
-      .then((data:Product) => {
-          console.log(data);
-          this.setState({ productList: data });
-      })
-      .catch((err:string) => this.setState({ error: err }))
-      .finally(() => this.setState({ isLoading: false }))
-  }
+    isFavoriteActive = (sku) => {
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        let index = favorites.indexOf(sku);
+        return index > -1;
+    };
+
+    onFavoriteClick = (sku) => {
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        let index = favorites.indexOf(sku);
+        this.isFavoriteActive(sku) ? favorites.splice(index, 1) : favorites.push(sku);
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+        this.forceUpdate();
+    };
+
+    isInCart = (sku) => {
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let index = cart.indexOf(sku);
+        return index > -1;
+    };
+
+    addToCart = (sku) => {
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let index = cart.indexOf(sku);
+        this.isInCart(sku) ? cart.splice(index, 1) : cart.push(sku);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        this.forceUpdate();
+    };
 
   render() {
     return (
-      <div>
-        {
-          this.state.error &&
-          <div>
-            <p>{this.state.error.message}</p>
-            <p className="text-center">
-              <Link to="/products">Reload</Link>
-            </p>
-          </div>
-        }
-        {
-          this.state.isLoading &&
-          <Loading />
-        }
-        <h1>ProductList</h1>
-        <ProductListControl
-          isShowGrid={this.state.isShowGrid}
-          onControlClick={() => this.setGrid()}
-        />
-        <div className={`flex ${this.state.isShowGrid ? 'row': ''}`}>
-          {
-            this.state.productList.map((item:Product, index:number) => (
-              <div className="flex-item text-center" key={item.sku}>
-                <div className="product__box">
-                  <p className="product__type">SHOE</p>
-                  <h3 className="product__name">{item.name}</h3>
-                  <img src={`http://localhost:1235${item.images[Math.floor(Math.random()*item.images.length)]}`} alt={item.name} className="product__image" />
-                  <p className="product__price">${item.price}</p>
-                  <button
-                    className="product__favorite-icon product__top-icon"
-                    onClick={() => this.setFavorite(index)}
-                  >
-                    <img
-                      src={Math.random() >= 0.5 ? FavoriteActiveIcon : FavoriteIcon}
-                      alt="Favorite icon"
-                    />
-                  </button>
-                  <Link to="/" className="product__package-icon product__top-icon">
-                    <img
-                      src={Math.random() >= 0.5 ? PackgageActiveIcon : PackgageIcon}
-                      alt="Package icon"
-                    />
-                  </Link>
-                </div>
-              </div>
-            ))
-          }
+        <div className="page">
+            <div className="interactions">
+                <form onSubmit={this.onInitialSearch}>
+                    <input type="text" ref={node => this.input = node} />
+                    <button type="submit">Search product name (ex: shoes-45)</button>
+                </form>
+            </div>
+            <ProductListControl
+                isShowGrid={this.state.isShowGrid}
+                onControlClick={() => this.setGrid()}
+            />
+            <AdvancedProductList
+                list={this.state.hits}
+                isError={this.state.isError}
+                isLoading={this.state.isLoading}
+                isShowGrid = {this.state.isShowGrid}
+                page={this.state.page}
+                onPaginatedSearch={this.onPaginatedSearch}
+                isFavorite = {this.isFavoriteActive}
+                onFavoriteClick={this.onFavoriteClick}
+                isInCart = {this.isInCart}
+                addToCart={this.addToCart}
+            />
         </div>
-        <Pagination pageCounts={this.state.productList.length} />
-      </div>
     )
   }
 }
+
+// component danh sách sản phẩm, sử dụng các prop truyền vào ở trên
+const ProductList = ({ list, isShowGrid, isFavorite, onFavoriteClick, isInCart, addToCart }) =>
+    <div
+        className={`flex ${isShowGrid ? 'row': ''}`}
+    >
+        {list.map(item => <div className="flex-item text-center" key={item.sku}>
+            <div className="product__box">
+                <p className="product__type">SHOE</p>
+                <h3 className="product__name">{item.name}</h3>
+                <img src={`http://localhost:1235${item.images[0]}`} alt={item.name} className="product__image" />
+                <p className="product__price">${item.price}</p>
+                <button
+                    className="product__favorite-icon product__top-icon"
+                    onClick={() =>  onFavoriteClick(item.sku)}
+                >
+                    <img
+                        src={isFavorite(item.sku) ? FavoriteActiveIcon : FavoriteIcon}
+                        alt="Favorite icon"
+                    />
+                </button>
+                <button
+                    className="product__package-icon product__top-icon"
+                    onClick={() =>  addToCart(item.sku)}
+                >
+                    <img
+                        src={isInCart(item.sku) ? PackgageActiveIcon : PackgageIcon}
+                        alt="Package icon"
+                    />
+                </button>
+            </div>
+        </div>)}
+    </div>;
+
+const loadingCondition = props =>
+    props.isLoading;
+
+// HOC thêm loading khi đang tải dữ liệu
+const withLoading = (conditionFn) => (Component) => (props) =>
+    <div>
+        <Component {...props} />
+
+        <div className="">
+            {conditionFn(props) && <span>Loading...</span>}
+        </div>
+    </div>;
+
+const paginatedCondition = props =>
+    props.page !== null && !props.isLoading && props.isError;
+
+// HOC thêm nút Try Again khi infinite load bị lỗi
+const withPaginated = (conditionFn) => (Component) => (props) =>
+    <div>
+        <Component {...props} />
+        <div className="try-again_btn">
+            {
+                conditionFn(props) &&
+                <div>
+                    <div>
+                        Something went wrong...
+                    </div>
+                    <button
+                        type="button"
+                        onClick={props.onPaginatedSearch}
+                    >
+                        Try Again
+                    </button>
+                </div>
+            }
+        </div>
+    </div>;
+
+const infiniteScrollCondition = props =>
+    (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 500)
+    && props.list.length
+    && !props.isLoading
+    && !props.isError;
+
+// HOC tự động load thêm dữ liệu khi kéo chuột đến gần cuối trang
+const withInfiniteScroll = (conditionFn) => (Component) =>
+    class WithInfiniteScroll extends React.Component {
+        componentDidMount() {
+            window.addEventListener('scroll', this.onScroll, false);
+        }
+
+        componentWillUnmount() {
+            window.removeEventListener('scroll', this.onScroll, false);
+        }
+
+        onScroll = () =>
+            conditionFn(this.props) && this.props.onPaginatedSearch();
+
+        render() {
+            return <Component {...this.props} />;
+        }
+    };
+
+// dùng thư viện recompose để chạy các HOC tuần tự
+// link: https://github.com/acdlite/recompose
+// ở đây truyền các điều kiện vào HOC nhằm mục đích tách riêng phần xử lý của HOC và phần logic
+const AdvancedProductList = compose(
+    withLoading(loadingCondition),
+    withInfiniteScroll(infiniteScrollCondition),
+    withPaginated(paginatedCondition),
+)(ProductList);

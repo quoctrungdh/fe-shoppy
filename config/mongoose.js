@@ -44,7 +44,7 @@ module.exports = function sampleData() {
         categoryId: `CAT000${i}`,
         groupId: `GR000${i}`,
         colorId: `CL000${i}`,
-        images: ['/static/images/shoes1.png', '/static/images/shoes2.png', '/static/images/shoes3.png', '/static/images/shoes4.png'],
+        images: ['/static/images/shoes1.png', '/static/images/shoes2.png', '/static/images/shoes3.png', '/static/images/shoes4.png', '/static/images/shoes5.png', '/static/images/shoes6.png'],
         price: Math.floor(Math.random() * (10000000 - 10000 + 1) + 10000),
         sizes: [35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45],
         description: 'Nice shoe to choose',

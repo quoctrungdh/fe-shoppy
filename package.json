@@ -27,9 +27,11 @@
     "mongoose-url-slugs": "^1.0.2",
     "morgan": "^1.9.0",
     "node-notifier": "^5.2.1",
+    "nodemon": "^1.17.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-router-dom": "^4.2.2",
+    "recompose": "^0.26.0",
     "winston": "^2.4.1"
   },
   "devDependencies": {
@@ -53,6 +55,6 @@
   "scripts": {
     "start": "npm run start-dev-server & npm run start-dev-client",
     "start-dev-client": "parcel client/index.html",
-    "start-dev-server": "NODE_ENV=development node server/index.js"
+    "start-dev-server": "NODE_ENV=development nodemon server/index.js"
   }
 }

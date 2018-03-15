@@ -50,11 +50,17 @@ ProductSchema.statics = {
      * @param {number} limit - Giới hạn số lượng product sẽ trả lên.
      * @returns {Promise<Product[]>}
      */
-  list({ skip = 0, limit = 50 } = {}) {
-    return this.find()
+  list({ where = '', skip = 0, hitsPerPage = 10 } = {}) {
+    const parsedWhere = JSON.parse(where);
+    for (const key in parsedWhere) {
+      if (Object.prototype.hasOwnProperty.call(parsedWhere, key)) {
+        parsedWhere[key] = new RegExp(parsedWhere[key], 'i');
+      }
+    }
+    return this.find(parsedWhere)
       .sort({ dateAdded: -1 })
       .skip(+skip)
-      .limit(+limit)
+      .limit(+hitsPerPage)
       .exec();
   },
 };
