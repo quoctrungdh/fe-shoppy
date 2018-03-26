@@ -1,17 +1,24 @@
 {
   "name": "fe-shoppy",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.jsx",
   "author": "quoctrungdh <quoctrungdh@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@types/react-dom": "^16.0.4",
+    "@types/react-router": "^4.0.23",
+    "@types/yup": "^0.24.2",
     "formik": "^0.11.11",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-google-login": "^3.2.0",
+    "react-notifications": "^1.4.3",
     "react-router-dom": "^4.2.2",
     "yup": "^0.24.1"
   },
   "devDependencies": {
+    "@types/react": "^16.3.2",
+    "@types/react-router-dom": "^4.2.4",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
@@ -22,7 +29,11 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
     "node-sass": "^4.7.2",
-    "parcel-bundler": "^1.6.2"
+    "parcel-bundler": "^1.6.2",
+    "tslint-config-airbnb": "^5.7.0",
+    "tslint-config-prettier": "^1.9.0",
+    "tslint-react": "^3.5.1",
+    "typescript": "^2.8.1"
   },
   "scripts": {
     "start": "parcel client/index.html"
