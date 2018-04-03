@@ -106,9 +106,9 @@ export default class ProductList extends React.Component {
     onFailed = () =>
         this.setState(whenLoadMoreFail);
 
-  setGrid():void {
-    this.setState({ isShowGrid: !this.state.isShowGrid });
-  }
+    setGrid = () => {
+        this.setState({ isShowGrid: !this.state.isShowGrid });
+    }
 
     isFavoriteActive = (sku) => {
         let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
@@ -149,7 +149,7 @@ export default class ProductList extends React.Component {
             </div>
             <ProductListControl
                 isShowGrid={this.state.isShowGrid}
-                onControlClick={() => this.setGrid()}
+                onControlClick={this.setGrid}
             />
             <AdvancedProductList
                 list={this.state.hits}
@@ -169,7 +169,7 @@ export default class ProductList extends React.Component {
 }
 
 // component danh sách sản phẩm, sử dụng các prop truyền vào ở trên
-const ProductList = ({ list, isShowGrid, isFavorite, onFavoriteClick, isInCart, addToCart }) =>
+const ProductListC = ({ list, isShowGrid, isFavorite, onFavoriteClick, isInCart, addToCart }) =>
     <div
         className={`flex ${isShowGrid ? 'row': ''}`}
     >
@@ -178,7 +178,7 @@ const ProductList = ({ list, isShowGrid, isFavorite, onFavoriteClick, isInCart, 
                 <p className="product__type">SHOE</p>
                 <h3 className="product__name">{item.name}</h3>
                 <img src={`http://localhost:1235${item.images[0]}`} alt={item.name} className="product__image" />
-                <p className="product__price">${item.price}</p>
+                <p className="product__price">$ {item.price}</p>
                 <button
                     className="product__favorite-icon product__top-icon"
                     onClick={() =>  onFavoriteClick(item.sku)}
@@ -271,4 +271,4 @@ const AdvancedProductList = compose(
     withLoading(loadingCondition),
     withInfiniteScroll(infiniteScrollCondition),
     withPaginated(paginatedCondition),
-)(ProductList);
+)(ProductListC);
