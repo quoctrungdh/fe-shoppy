@@ -4,6 +4,9 @@
 @import 'common/SSelect/SSelect.scss';
 @import 'routes/Promotions/promotions.scss';
 @import 'common/PromotionItem/promotionItem.scss';
+@import 'variables';
+@import 'common/loading';
+@import 'routes/productList';
 
 // Normalizer
 h1,
@@ -60,4 +63,8 @@ img {
 button {
   outline: 0;
   padding: .5rem 1rem;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 904a43aa8c8be8d951ae3e2eea650f2fa9884529

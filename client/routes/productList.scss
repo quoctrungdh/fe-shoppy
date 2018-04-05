@@ -1,0 +1,82 @@
+.text {
+  &-center {
+    text-align: center;
+  }
+
+  &-right {
+    text-align: right;
+  }
+}
+
+.flex {
+  animation: fadeInUp 2.5s linear forwards;
+  &.row {
+    display: flex;
+    flex-flow: row wrap;
+  }
+
+  &-item {
+    color: $color-black;
+    padding: .15rem;
+    position: relative;
+    text-transform: uppercase;
+    flex-basis: 50%;
+  }
+}
+
+.product {
+  &__box {
+    box-shadow: 0 0 .3rem .1rem $color-black-20;
+    height: 100%;
+    padding: 4rem 0;
+  }
+
+  &__type,
+  &__price {
+    font-size: 2.5rem;
+  }
+
+  &__name {
+    font-size: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  &__image {
+    margin: 35px 0;
+  }
+
+  &__top-icon {
+    position: absolute;
+    top: 4rem;
+  }
+
+  &__favorite-icon {
+    cursor: pointer;
+    background-color: $color-white;
+    border: 0;
+    outline: 0;
+    left: 1rem;
+  }
+
+  &__package-icon {
+    right: 1rem;
+  }
+}
+
+.btn-product-display {
+  &.active {
+    background-color: $color-royal-blue;
+    color: $color-white;
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    transform: translateY(10rem);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
