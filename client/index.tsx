@@ -6,7 +6,7 @@ import Nav from './common/Nav';
 import Home from './routes/Home';
 import About from './routes/About';
 import NotFound from './routes/NotFound';
-import Promotion from './routes/Promotions/Promotions';
+import Promotions from './routes/Promotions/Promotions';
 
 import './style.scss';
 
@@ -17,7 +17,7 @@ ReactDOM.render(
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/about" component={About} />
-        <Route path="/promotion" component={Promotion} />
+        <Route path="/promotions" component={Promotions} />
         <Route component={NotFound} />
       </Switch>
     </div>

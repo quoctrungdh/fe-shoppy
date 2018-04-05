@@ -5,9 +5,12 @@
   "author": "quoctrungdh <quoctrungdh@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@types/lodash": "^4.14.106",
     "@types/react": "^16.0.40",
     "@types/react-dom": "^16.0.4",
     "@types/react-select": "^1.2.4",
+    "lodash": "^4.17.5",
+    "moment": "^2.21.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-router-dom": "^4.2.2",

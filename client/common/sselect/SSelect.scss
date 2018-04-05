@@ -1,3 +1,9 @@
 .custom-select {
-  border: 1px solid gray;
+  padding: 0 10px;
+
+  .Select {
+    .Select-control {
+      border-color: $color-silver;
+    }
+  }
 }

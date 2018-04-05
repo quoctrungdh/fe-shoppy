@@ -1,5 +1,63 @@
-@import 'common/sselect/SSelect.scss';
+@import 'variables.scss';
+@import 'common/loading.scss';
+@import 'routes/productList.scss';
+@import 'common/SSelect/SSelect.scss';
+@import 'routes/Promotions/promotions.scss';
+@import 'common/PromotionItem/promotionItem.scss';
+
+// Normalizer
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+
+  &:hover,
+  &:focus,
+  &:active {
+    text-decoration: none;
+  }
+}
+
+ul {
+  li {
+    list-style: none;
+  }
+}
+
+html {
+  font-size: 10px;
+}
 
 body {
-	color: black;
+  color: blue;
+  font-size: 1.6rem;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button {
+  outline: 0;
+  padding: .5rem 1rem;
 }
