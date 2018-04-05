@@ -1,0 +1,28 @@
+.promotions {
+  color: $color-black;
+
+  .result-block {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    margin: 10px;
+  }
+
+  &__button-groups {
+    display: inline-block;
+    width: 100%;
+    margin-top: 10px;
+    padding: 0 10px;
+  }
+
+  &__sortBtn {
+    text-align: center;
+    font-size: 20px;
+    border: 1px solid $color-silver;
+    width: 30px;
+    float: right;
+    cursor: pointer;
+    color: $color-white;
+    background-color: $color-black;
+  }
+}

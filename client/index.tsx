@@ -7,6 +7,7 @@ import Home from './routes/Home';
 import About from './routes/About';
 import ProductList from './routes/ProductList';
 import NotFound from './routes/NotFound';
+import Promotions from './routes/Promotions/Promotions';
 
 import './style.scss';
 
@@ -17,6 +18,7 @@ ReactDOM.render(
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/about" component={About} />
+        <Route path="/promotions" component={Promotions} />
         <Route path="/products" component={ProductList} />
         <Route component={NotFound} />
       </Switch>
