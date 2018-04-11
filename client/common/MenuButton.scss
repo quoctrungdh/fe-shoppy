@@ -1,0 +1,23 @@
+.menu-button {
+  max-width: 40px;
+
+  &__bar {
+    background-color: black;
+    height: 4px;
+    margin: 8px 0;
+
+    &--2 {
+      width: 25px;
+    }
+
+    &--3 {
+      width: 33px;
+    }
+
+    // + .menu-button {
+    //   &__bar {
+    //     margin-top: 12px;
+    //   }
+    // }
+  }
+}
