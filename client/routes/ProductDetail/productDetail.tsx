@@ -6,38 +6,45 @@ import cartService     from '../Services/cart';
 const data = {
   "productId": "PD0001",
   "name": "nike-001",
-	"description": "test fdhkshf",
+	"description": "Nike, Inc. is an American multinational corporation that is engaged in the design, development, manufacturing, and worldwide marketing and sales of footwear, apparel, equipment, accessories, and services.",
 	"isFavorite": true,
   "price": 500,
   "sizes" : [37, 38, 39, 40],
   "skus" : [
     {
       "sku": "sku001",
-      "imageUrl": require("../../assets/imgs/shoes1.png"),
+      "imageUrl": require("../../assets/images/shoes1.png"),
       "colorID": "M0001_0f0",
     },
     {
 			"sku": "sku002",
-			"imageUrl": require("../../assets/imgs/shoes1-pink.png"),
+			"imageUrl": require("../../assets/images/shoes1-pink.png"),
       "colorID": "M0001_0ff",
     },
     {
 			"sku": "sku003",
-			"imageUrl": require("../../assets/imgs/shoes1.png"),
+			"imageUrl": require("../../assets/images/shoes1.png"),
       "colorID": "M0001_ff0",
     },
     {
 			"sku": "sku004",
-			"imageUrl": require("../../assets/imgs/shoes1-pink.png"),
+			"imageUrl": require("../../assets/images/shoes1-pink.png"),
       "colorID": "M0001_000",
     },
     {
 			"sku": "sku005",
-			"imageUrl": require("../../assets/imgs/shoes1.png"),
+			"imageUrl": require("../../assets/images/shoes1.png"),
       "colorID": "M0001_0f0",
     }
   ]
 }
+
+// todo: fetch data from fake server
+// fetch('http://localhost:3001/products')
+// 	.then((data) => data.json())
+// 	.then(data => {
+// 		console.log(data)
+// 	})
 
 const settings = {
   dots          : false,
@@ -70,9 +77,9 @@ interface IMyComponentState {
 		productId: string,
 		sku      : string,
 		size     : number,
-		quantity : number,
+		price    : number,
 	},
-	totalCart    : object[],
+	totalCart  : object[],
 }
 
 class ProductDetail extends React.Component<IMyComponentProps, IMyComponentState> {
@@ -84,7 +91,7 @@ class ProductDetail extends React.Component<IMyComponentProps, IMyComponentState
 				productId: data.productId,
 				sku      : data.skus[0].sku,
 				size     : data.sizes[0],
-				quantity : 1,
+				price    : data.price,
 			},
 			totalCart: [],
 		}
@@ -93,7 +100,7 @@ class ProductDetail extends React.Component<IMyComponentProps, IMyComponentState
   onClickTochangeColor =(e: any) => {
 		e.preventDefault();
 		const colorID = e.target.innerText;
-		const selectedImg = data.skus.find((item) => {
+		const selectedImg = data.skus.find((item:any) => {
 			return (item.colorID === colorID) ? item.imageUrl : '';
 		});
 
@@ -138,19 +145,14 @@ class ProductDetail extends React.Component<IMyComponentProps, IMyComponentState
 	}
 
 	addToCart() {
-		this.setState({
-			dataAddCart: {
-				...this.state.dataAddCart,
-				quantity: 1
-			}
-		});
 		cartService.addToCart(this.state.dataAddCart);
 	}
 
   render() {
     const favClass = classNames('favorite', {
     	'active': data.isFavorite
-      });
+		});
+
     return (
       <div>
         <div className="product-detail">

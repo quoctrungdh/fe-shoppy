@@ -1,38 +1,41 @@
 import * as React from 'react';
 
-function Cart() {
-    const items = [];
-    const listener = [];
+interface Item {
+    sku     : string,
+    size    : string,
+    quantity: number,
+    price   : number,
+}
 
-    function addListener(l) {
+function Cart() {
+    let   items:Item[] = [];
+    const listener:any = [];
+
+    function addListener(l:any) {
         listener.push(l);
     }
 
-    function removeListener(l) {
-        listener.filter(listener => listener === l);
+    function removeListener(l:any) {
+        listener.filter((listener:any) => listener === l);
     }
 
     function notify() {
-        listener.forEach(l => {
+        listener.forEach((l:any) => {
             l();
         });
     }
 
-    function addToCart(item) {
-        let isFound = false;
-        if (items.length > 0) {
-            items.forEach(elm => {
-                if (elm.sku === item.sku && elm.size === item.size) {
-                    elm.quantity = elm.quantity + 1;
-                    isFound = true;
-                    return;
-                }
-            });      
-            if(!isFound) {
-                items.push(item);  
-            }
+    function addToCart(item:Item) {
+        const itemToAdd = {
+            ...item,
+            quantity: 1
+        }
+
+        const itemIsFound = items.find((elm:Item) => (elm.sku === item.sku && elm.size === item.size))
+        if(itemIsFound) {
+            itemIsFound.quantity = itemIsFound.quantity + 1;
         } else {
-            items.push(item); 
+            items.push(itemToAdd);
         }
         notify();
     }
@@ -41,11 +44,19 @@ function Cart() {
         return items;
     }
 
+    function removeItem(item:Item) {
+        items = items.filter(elm => (
+            elm.size !== item.size || elm.sku !== item.sku
+        ));
+        notify();
+    }
+
     return {
         addListener,
         removeListener,
         getItems,
-        addToCart        
+        addToCart,
+        removeItem,
     }
 }
 
