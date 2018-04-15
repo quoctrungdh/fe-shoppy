@@ -1,35 +1,63 @@
-import * as React from 'react';
+import * as React      from 'react';
 import * as classNames from 'classnames';
-import Slider from 'react-slick';
+import Slider          from 'react-slick';
+import cartService     from '../Services/cart';
 
 const data = {
-	"productId": "0001",
-	"name": "nike-01",
-	"price": 300,
+  "productId": "PD0001",
+  "name": "nike-001",
+	"description": "test fdhkshf",
 	"isFavorite": true,
-	"imageUrl": require("../../assets/imgs/shoes1.png"),
-	"sizes": ["42", "43", "44", "45"],
-	"colors": ["red", "gray", "pink", "black"],
-	"description": "fdshksdhfkdshfsd fhdsskjjfhsdk fdhskfh fdshsfkjdjhskfbdsk dfsshfkjdjshf"
-}
-
-const changeColorAPI = {
-	"imageUrl": require("../../assets/imgs/shoes1-pink.png")
+  "price": 500,
+  "sizes" : [37, 38, 39, 40],
+  "skus" : [
+    {
+      "sku": "sku001",
+      "imageUrl": require("../../assets/imgs/shoes1.png"),
+      "colorID": "M0001_0f0",
+    },
+    {
+			"sku": "sku002",
+			"imageUrl": require("../../assets/imgs/shoes1-pink.png"),
+      "colorID": "M0001_0ff",
+    },
+    {
+			"sku": "sku003",
+			"imageUrl": require("../../assets/imgs/shoes1.png"),
+      "colorID": "M0001_ff0",
+    },
+    {
+			"sku": "sku004",
+			"imageUrl": require("../../assets/imgs/shoes1-pink.png"),
+      "colorID": "M0001_000",
+    },
+    {
+			"sku": "sku005",
+			"imageUrl": require("../../assets/imgs/shoes1.png"),
+      "colorID": "M0001_0f0",
+    }
+  ]
 }
 
 const settings = {
-  dots: false,
-  infinite: false,
-  speed: 500,
-  slidesToShow: 3,
+  dots          : false,
+  infinite      : false,
+  speed         : 500,
+  slidesToShow  : 3,
   slidesToScroll: 1,
-  className: "product-detail-slider",
-  focusOnSelect: true,
-  useCSS: true,
-  accessibility: true,
-  arrows: true,
-  centerMode: true,
-  centerPadding: "10px",
+  className     : 'product-detail-slider',
+  focusOnSelect : true,
+  useCSS        : true,
+  accessibility : true,
+  arrows        : true,
+  centerMode    : true,
+  centerPadding : '8px',
+}
+
+interface ProductDetail {
+	selectedColor: string,
+	selectedSku  : string,
+	selectedSize : number,
 }
 
 interface IMyComponentProps {
@@ -37,31 +65,92 @@ interface IMyComponentProps {
 }
 
 interface IMyComponentState {
-  img?: string
+	imageUrl?: string,
+	dataAddCart: {
+		productId: string,
+		sku      : string,
+		size     : number,
+		quantity : number,
+	},
+	totalCart    : object[],
 }
 
 class ProductDetail extends React.Component<IMyComponentProps, IMyComponentState> {
 	constructor(props: IMyComponentProps) {
     super(props);
 		this.state = {
-			img: data.imageUrl
-    }
-    this.onClickTochangeColor = this.onClickTochangeColor.bind(this);
+			imageUrl: data.skus[0].imageUrl,
+			dataAddCart: {
+				productId: data.productId,
+				sku      : data.skus[0].sku,
+				size     : data.sizes[0],
+				quantity : 1,
+			},
+			totalCart: [],
+		}
   }
 
-  onClickTochangeColor(e: any) {
-    e.preventDefault();
-    this.setState({
-      img: changeColorAPI.imageUrl
+  onClickTochangeColor =(e: any) => {
+		e.preventDefault();
+		const colorID = e.target.innerText;
+		const selectedImg = data.skus.find((item) => {
+			return (item.colorID === colorID) ? item.imageUrl : '';
+		});
+
+		const { imageUrl, sku } = selectedImg;
+		this.setState({
+			imageUrl,
+			dataAddCart: {
+				...this.state.dataAddCart,
+				sku
+			}
     });
   }
 
+	onClickToChangeSize(e: any) {
+		e.preventDefault();
+		this.setState({
+			dataAddCart: {
+				...this.state.dataAddCart,
+				size: Number(e.target.innerText)
+			}
+		});
+	}
+
+	getColor(colorId: string) {
+		return colorId.split('_')[1];
+	}
+
+	onloadImage () {
+		return data.skus.map((item, index) => {
+			const onStyle = {
+					backgroundColor: `#${this.getColor(item.colorID)}`
+			}
+			return (
+				<div 
+					className={`item-color ${item.colorID}`} 
+					onClick={(e) => this.onClickTochangeColor(e)} 
+					key={index}>
+						<span style={onStyle}>{item.colorID}</span>
+				</div>
+			)
+		})
+	}
+
+	addToCart() {
+		this.setState({
+			dataAddCart: {
+				...this.state.dataAddCart,
+				quantity: 1
+			}
+		});
+		cartService.addToCart(this.state.dataAddCart);
+	}
+
   render() {
-    const favClass = classNames({
-    	'favorite': true,
+    const favClass = classNames('favorite', {
     	'active': data.isFavorite
       });
-
     return (
       <div>
         <div className="product-detail">
@@ -72,7 +161,7 @@ class ProductDetail extends React.Component<IMyComponentProps, IMyComponentState
         	</div>
 
         	<div className="product-detail__image">
-        		<img src={this.state.img} alt={data.name} />
+        		<img src={this.state.imageUrl} alt={data.name} />
         	</div>
 
         	<div className="product-detail__options">
@@ -81,7 +170,7 @@ class ProductDetail extends React.Component<IMyComponentProps, IMyComponentState
         			<Slider {...settings}>
         				{
         					data.sizes.map((item, index) => {
-        						return <div className="item-size" key={index}><span>{item}</span></div>
+        						return <div className="item-size" key={index}><span onClick={(e) => this.onClickToChangeSize(e)}>{item}</span></div>
         					})
         				}
         			</Slider>
@@ -90,9 +179,7 @@ class ProductDetail extends React.Component<IMyComponentProps, IMyComponentState
         		  <span className="product-detail__options__title">choose color</span>
         			<Slider {...settings}>
         				{
-        					data.colors.map((item, index) => {
-        						return <div className={`item-color ${item}`} onClick={(e) => this.onClickTochangeColor(e)} key={index}><span>{item}</span></div>
-        					})
+        					this.onloadImage()
         				}
         			</Slider>
         		</div>
@@ -102,8 +189,8 @@ class ProductDetail extends React.Component<IMyComponentProps, IMyComponentState
             {data.description}
         	</div>
 
-        	<div>
-            <button className="btn add-cart">Add To Cart</button>
+        	<div className="text-center">
+            <button onClick={() => this.addToCart()} className="btn add-cart">Add To Cart</button>
         	</div>
         </div>
       </div>

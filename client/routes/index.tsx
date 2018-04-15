@@ -27,7 +27,6 @@ ReactDOM.render(
   document.getElementById('root'),
 );
 
-
 /**
  * TODO: ESLINT
  * REDUX
