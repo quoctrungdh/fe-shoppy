@@ -1,6 +1,7 @@
-import * as React from 'react';
+import * as React      from 'react';
 import * as classNames from 'classnames';
-import Slider from 'react-slick';
+import Slider          from 'react-slick';
+import cartService     from '../Services/cart';
 
 const data = {
   "productId": "PD0001",
@@ -21,17 +22,17 @@ const data = {
       "colorID": "M0001_0ff",
     },
     {
-			"sku": "sku004",
+			"sku": "sku003",
 			"imageUrl": require("../../assets/imgs/shoes1.png"),
       "colorID": "M0001_ff0",
     },
     {
-			"sku": "sku001",
+			"sku": "sku004",
 			"imageUrl": require("../../assets/imgs/shoes1-pink.png"),
       "colorID": "M0001_000",
     },
     {
-			"sku": "sku001",
+			"sku": "sku005",
 			"imageUrl": require("../../assets/imgs/shoes1.png"),
       "colorID": "M0001_0f0",
     }
@@ -64,11 +65,12 @@ interface IMyComponentProps {
 }
 
 interface IMyComponentState {
-	img?: string,
+	imageUrl?: string,
 	dataAddCart: {
 		productId: string,
 		sku      : string,
 		size     : number,
+		quantity : number,
 	},
 	totalCart    : object[],
 }
@@ -77,34 +79,42 @@ class ProductDetail extends React.Component<IMyComponentProps, IMyComponentState
 	constructor(props: IMyComponentProps) {
     super(props);
 		this.state = {
-			img: data.skus[0].imageUrl,
+			imageUrl: data.skus[0].imageUrl,
 			dataAddCart: {
 				productId: data.productId,
 				sku      : data.skus[0].sku,
 				size     : data.sizes[0],
+				quantity : 1,
 			},
 			totalCart: [],
 		}
-		// this.totalCart = [];
-    this.onClickTochangeColor = this.onClickTochangeColor.bind(this);
   }
 
-  onClickTochangeColor(e: any) {
+  onClickTochangeColor =(e: any) => {
 		e.preventDefault();
 		const colorID = e.target.innerText;
-		const selectedImg = data.skus.filter((item) => {
+		const selectedImg = data.skus.find((item) => {
 			return (item.colorID === colorID) ? item.imageUrl : '';
 		});
+
+		const { imageUrl, sku } = selectedImg;
 		this.setState({
-			img: selectedImg[0].imageUrl,
-    }, () => {
-			this.state.dataAddCart.sku = selectedImg[0].sku;
-		});
+			imageUrl,
+			dataAddCart: {
+				...this.state.dataAddCart,
+				sku
+			}
+    });
   }
 
 	onClickToChangeSize(e: any) {
 		e.preventDefault();
-		this.state.dataAddCart.size = e.target.innerText;
+		this.setState({
+			dataAddCart: {
+				...this.state.dataAddCart,
+				size: Number(e.target.innerText)
+			}
+		});
 	}
 
 	getColor(colorId: string) {
@@ -130,21 +140,11 @@ class ProductDetail extends React.Component<IMyComponentProps, IMyComponentState
 	addToCart() {
 		this.setState({
 			dataAddCart: {
-				productId: data.productId,
-				sku      : this.state.dataAddCart.sku,
-				size     : this.state.dataAddCart.size,
+				...this.state.dataAddCart,
+				quantity: 1
 			}
-		},() => {
-			const selectedSku = this.state.dataAddCart;
-			console.log(selectedSku);
-			this.setState({
-				totalCart:this.state.totalCart.concat([selectedSku]),
-				// [...this.state.totalCart, selectedSku]
-			});
-			// [...this.totalCart].push(selectedSku);
-			console.log(this.state.totalCart);
 		});
-
+		cartService.addToCart(this.state.dataAddCart);
 	}
 
   render() {
@@ -161,7 +161,7 @@ class ProductDetail extends React.Component<IMyComponentProps, IMyComponentState
         	</div>
 
         	<div className="product-detail__image">
-        		<img src={this.state.img} alt={data.name} />
+        		<img src={this.state.imageUrl} alt={data.name} />
         	</div>
 
         	<div className="product-detail__options">
