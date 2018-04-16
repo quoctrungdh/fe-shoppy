@@ -1,0 +1,72 @@
+.cart {
+  padding-left: 40px;
+  cursor: pointer;
+
+  &__icon {
+    background-image: url($icon-cart);
+    background-repeat: no-repeat;
+    background-position: left top;
+    position: relative;
+    display: block;
+    width: 24px;
+    height: 24px;
+  }
+
+  &__numbers {
+    background: $color-black;
+    color: $color-white;
+    display: block;
+    position: absolute;
+    left: 11px;
+    top: -2px;
+    width: 15px;
+    height: 15px;
+    text-align: center;
+    border-radius: 50%;
+    font-size: 10px;
+    line-height: 15px;
+  }
+
+  &__content {
+    display: none;
+    margin-top: 10px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1;
+    background-color: $color-white;
+    color: $color-black;
+  }
+
+  &__list {
+    margin: 0;
+    padding: 0;
+    clear: both;
+    color: $color-black;
+
+    th {
+      font-size: 13px;
+      color: $color-black;
+    }
+
+    td {
+      text-align: center;
+      font-size: 13px;
+      padding: 5px;
+
+      a {
+        color: $color-black;
+      }
+    }
+  }
+
+  &.open {
+    .cart__content {
+      display: inline-block;
+      border: 1px solid $color-black;
+    }
+  }
+
+  &__remove {
+    cursor: pointer;
+  }
+}
