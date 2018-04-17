@@ -1,9 +1,20 @@
+@import 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css';
+@import 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css';
+
 @import './_reset';
 @import './_variables';
+@import './cart';
 
 @import '../fragments/Input';
 @import '../fragments/Button';
 @import '../fragments/ErrorMessage';
+
 @import '../common/Nav';
+@import '../common/loading';
+@import '../common/SSelect/SSelect';
+@import '../common/PromotionItem/promotionItem';
 
 @import '../routes/Login';
+@import '../routes/productList';
+@import '../routes/Promotions/promotions';
+@import '../routes/ProductDetail/productDetail';
