@@ -1,0 +1,16 @@
+.shoppyButton {
+	padding: $size-small/2 $size-medium*2;
+	border-radius: 30px;
+	background-color: $color-transparent;
+	border: 1px solid $color-primary;
+	color: $color-primary;
+	font-size: $size-small;
+	transition: all 0.2s ease-out;
+
+	&:hover {
+		background-color: $color-primary;
+		color: $color-polar;
+	}
+}
+// TODO: button border gradient
+// TODO: button hover effect + states

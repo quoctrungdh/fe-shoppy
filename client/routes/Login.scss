@@ -1,0 +1,31 @@
+.login,
+.register {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.loginForm,
+.registerForm {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	.shoppyInput {
+		margin-bottom: $size-small;
+	}
+
+	.shoppyButton {
+		margin-top: $size-small;
+	}
+}
+
+.socialLogin {
+	list-style: none;
+	display: flex;
+	margin-top: $size-medium;
+
+	&__item {
+		margin-right: $size-extra-small;
+	}
+}
