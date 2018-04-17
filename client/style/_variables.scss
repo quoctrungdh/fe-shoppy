@@ -4,12 +4,36 @@ $size-medium: 1.5rem;
 $size-large: 2rem;
 $size-extra-large: 2.5rem;
 
-$color-havelock-blue: #3f8ad8;
-$color-oslo-gray: #8d9297;
-$color-polar: #eaf6fb;
-$color-transparent: transparent;
-$color-valencia: #D63031;
+// color
+$color-havelock-blue  : #3f8ad8;
+$color-oslo-gray      : #8d9297;
+$color-polar          : #eaf6fb;
+$color-transparent    : transparent;
+$color-valencia       : #D63031;
+$color-white          : #fff;
+$color-black          : #000;
+$color-text           : #383838;
+$color-royal-blue     : #5a68e8;
+$color-dark-blue      : #081dbb;
+$color-persian-pink   : #f06eaa;
+$color-red-ribbon     : #e80737;
+$color-caribbean-green: #08bba8;
+$color-black-20       : rgba(0,0,0,.2);
+$color-medium-gray    : #949596;
+$color-chocolate      : #d2691e;
+$color-wheat          : #f5deb3;
+$color-silver         : #c0c0c0;
 
-$color-bg-primary: $color-polar;
+$color-bg-primary   : $color-polar;
 $color-error-primary: $color-valencia;
-$color-primary: $color-havelock-blue;
+$color-primary      : $color-havelock-blue;
+
+// icons
+$icon-fav       : '../assets/images/favorite_icon.png';
+$icon-fav-active: '../assets/images/favorite_active_icon.png';
+$icon-arrow-next: '../assets/images/next.png';
+$icon-arrow-prev: '../assets/images/prev.png';
+$icon-cart      : '../assets/images/package_icon.png';
+
+// z-index
+$z-index-loading: 10;

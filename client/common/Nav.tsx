@@ -1,9 +1,8 @@
-import * as React from 'react';
-import { Link } from 'react-router-dom';
-
+import * as React    from 'react';
+import { Link }      from 'react-router-dom';
 import authenService from '../authenService';
-
-import Button from '../fragments/Button';
+import Button        from '../fragments/Button';
+import Cart          from '../component/Cart';
 
 class Nav extends React.Component {
 	constructor(props: object) {
@@ -48,6 +47,7 @@ class Nav extends React.Component {
 							<Button onClick={this.doLogOut}>Log out</Button>
 						</li>
 					</ul>
+					<Cart />
 				</nav>
 			);
 		}
@@ -59,6 +59,7 @@ class Nav extends React.Component {
 					<li className="nav__item"><Link to="/login">Log In</Link></li>
 					<li className="nav__item"><Link to="/register">Register</Link></li>
 					<li className="nav__item"><Link to="/about">About</Link></li>
+					<Cart />
 				</ul>
 			</nav>
 		);
