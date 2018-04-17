@@ -1,6 +1,9 @@
 @import 'variables';
 @import 'common/loading';
 @import 'routes/productList';
+@import 'common/SSelect/SSelect.scss';
+@import 'routes/Promotions/promotions.scss';
+@import 'common/PromotionItem/promotionItem.scss';
 
 // Normalizer
 h1,

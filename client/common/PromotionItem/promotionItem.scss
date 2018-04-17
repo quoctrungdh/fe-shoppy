@@ -1,0 +1,45 @@
+$break-point: 600px;
+
+.promotion-item {
+  width: 100%;
+  margin: 10px auto;
+  border: 1px solid $color-medium-gray;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+
+  @media (max-width: $break-point) {
+    flex-direction: column;
+  }
+
+  &__img {
+    text-align: center;
+    flex-basis: 50%;
+    background-color: $color-wheat;
+
+    i, svg {
+      color: $color-chocolate;
+      font-size: 120px;
+    }
+  }
+
+  &__content {
+    line-height: 1.5;
+    flex-basis: 47%;
+    padding: 10px;
+    background-color: $color-silver;
+
+    @media (max-width: $break-point) {
+      padding: 0 5%;
+      text-align: center;
+    }
+
+    &__name {
+      font-size: 21px;
+    }
+
+    &__des {
+      font-size: 19px;
+    }
+  }
+}
