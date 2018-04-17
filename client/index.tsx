@@ -9,7 +9,9 @@ import LogIn from './routes/LogIn';
 import Register from './routes/Register';
 import About from './routes/About';
 import Favorites from './routes/Favorites';
+import ProductList from './routes/ProductList';
 import NotFound from './routes/NotFound';
+import Promotions from './routes/Promotions/Promotions';
 
 import './style/index.scss';
 
@@ -61,6 +63,7 @@ ReactDOM.render(
 				<UnAuthRoute path="/register" component={Register} />
 				<AuthRoute path="/favorites" component={Favorites} />
 				<Route path="/about" component={About} />
+				<Route path="/promotions" component={Promotions} />
 				<Route component={NotFound} />
 			</Switch>
 		</div>
