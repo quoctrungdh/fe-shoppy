@@ -9,7 +9,7 @@ const getSizes = mockNumber => [...Array(mockNumber)].map(() => (
 ));
 
 const getColor = mockNumber => [...Array(mockNumber)].map(() => ({
-  imageUrl: 'https://source.unsplash.com/640x480/?shoes-nike,shoes-adidas',
+  imageUrl: `https://source.unsplash.com/640x480/?${faker.commerce.productName()}`,
   color: faker.commerce.color(),
 }));
 

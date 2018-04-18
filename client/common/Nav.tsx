@@ -42,6 +42,7 @@ class Nav extends React.Component {
 						<li className="nav__item"><Link to="/">Home</Link></li>
 						<li className="nav__item"><Link to="/favorites">Favorites</Link></li>
 						<li className="nav__item"><Link to="/about">About</Link></li>
+						<li className="nav__item"><Link to="/products">Products</Link></li>
 						<li className="nav__item"><Link to="#">{userInfo.name}</Link></li>
 						<li className="nav__item">
 							<Button onClick={this.doLogOut}>Log out</Button>
@@ -58,6 +59,7 @@ class Nav extends React.Component {
 					<li className="nav__item"><Link to="/">Home</Link></li>
 					<li className="nav__item"><Link to="/login">Log In</Link></li>
 					<li className="nav__item"><Link to="/register">Register</Link></li>
+					<li className="nav__item"><Link to="/products">Products</Link></li>
 					<li className="nav__item"><Link to="/about">About</Link></li>
 					<Cart />
 				</ul>

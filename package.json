@@ -69,7 +69,7 @@
     "typescript": "^2.8.1"
   },
   "scripts": {
-    "start": "npm run start-dev-server & npm run start-dev-client",
+    "start": "npm run start-simple-server & npm run start-dev-client",
     "start-dev-client": "parcel client/index.html",
     "start-dev-server": "NODE_ENV=development nodemon server/index.js",
     "start-simple-server": "NODE_ENV=development nodemon sserver/index.js"

@@ -57,7 +57,7 @@ const queriesCombiner = (where) => {
 
 // hàm tạo url tới api để lấy danh sách product
 const getProductsUrl = (where:string, page:number, hitsPerPage:number) =>
-    `http://localhost:1235/api/product?where=${JSON.stringify(queriesCombiner(where))}&page=${page}&hitsPerPage=${hitsPerPage}`;
+    `http://localhost:12346/products`;
 
 export default class ProductList extends React.Component {
     constructor(props) {
@@ -91,8 +91,9 @@ export default class ProductList extends React.Component {
         this.setState({ isLoading: true });
         fetch(getProductsUrl(where, page, hitsPerPage))
             .then(response => response.json())
-            .then(result => {
-                this.applyProductData(result, page)
+            .then(products => {
+                console.log(products, 'products')
+                this.setState({ products })
             })
             .catch(this.onFailed);
     };
@@ -152,7 +153,7 @@ export default class ProductList extends React.Component {
                 onControlClick={() => this.setGrid()}
             />
             <AdvancedProductList
-                list={this.state.hits}
+                list={this.state.products}
                 isError={this.state.isError}
                 isLoading={this.state.isLoading}
                 isShowGrid = {this.state.isShowGrid}
@@ -169,31 +170,31 @@ export default class ProductList extends React.Component {
 }
 
 // component danh sách sản phẩm, sử dụng các prop truyền vào ở trên
-const ProductList = ({ list, isShowGrid, isFavorite, onFavoriteClick, isInCart, addToCart }) =>
+const ProductListRender = ({ list, isShowGrid, isFavorite, onFavoriteClick, isInCart, addToCart }) =>
     <div
         className={`flex ${isShowGrid ? 'row': ''}`}
     >
-        {list.map(item => <div className="flex-item text-center" key={item.sku}>
+        {list.map(item => <div className="flex-item text-center" key={item.productId}>
             <div className="product__box">
                 <p className="product__type">SHOE</p>
                 <h3 className="product__name">{item.name}</h3>
-                <img src={`http://localhost:1235${item.images[0]}`} alt={item.name} className="product__image" />
+                <img src={item.colors.imageUrl[0]} alt={item.name} className="product__image" />
                 <p className="product__price">${item.price}</p>
                 <button
                     className="product__favorite-icon product__top-icon"
-                    onClick={() =>  onFavoriteClick(item.sku)}
+                    onClick={() => onFavoriteClick(item.productId)}
                 >
                     <img
-                        src={isFavorite(item.sku) ? FavoriteActiveIcon : FavoriteIcon}
+                        src={isFavorite(item.productId) ? FavoriteActiveIcon : FavoriteIcon}
                         alt="Favorite icon"
                     />
                 </button>
                 <button
                     className="product__package-icon product__top-icon"
-                    onClick={() =>  addToCart(item.sku)}
+                    onClick={() =>  addToCart(item.productId)}
                 >
                     <img
-                        src={isInCart(item.sku) ? PackgageActiveIcon : PackgageIcon}
+                        src={isInCart(item.productId) ? PackgageActiveIcon : PackgageIcon}
                         alt="Package icon"
                     />
                 </button>
@@ -271,4 +272,4 @@ const AdvancedProductList = compose(
     withLoading(loadingCondition),
     withInfiniteScroll(infiniteScrollCondition),
     withPaginated(paginatedCondition),
-)(ProductList);
+)(ProductListRender);

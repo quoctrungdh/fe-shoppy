@@ -9,10 +9,11 @@ import LogIn from './routes/LogIn';
 import Register from './routes/Register';
 import About from './routes/About';
 import Favorites from './routes/Favorites';
-import ProductList from './routes/ProductList';
+import ProductListSimple from './routes/ProductList.Simple';
 import NotFound from './routes/NotFound';
 import Promotions from './routes/Promotions/Promotions';
 import ProductDetail from './routes/ProductDetail/productDetail';
+
 
 import './style/index.scss';
 
@@ -65,6 +66,7 @@ ReactDOM.render(
 				<AuthRoute path="/favorites" component={Favorites} />
 				<Route path="/about" component={About} />
 				<Route path="/promotions" component={Promotions} />
+				<Route path="/products" component={ProductListSimple} />
 				<Route path="/product-detail" component={ProductDetail} />
 				<Route component={NotFound} />
 			</Switch>
