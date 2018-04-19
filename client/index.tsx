@@ -67,7 +67,7 @@ ReactDOM.render(
 				<Route path="/about" component={About} />
 				<Route path="/promotions" component={Promotions} />
 				<Route path="/products" component={ProductListSimple} />
-				<Route path="/product-detail" component={ProductDetail} />
+				<Route path="/product-detail/:id" component={ProductDetail} />
 				<Route component={NotFound} />
 			</Switch>
 		</div>

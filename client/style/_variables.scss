@@ -5,9 +5,10 @@ $size-large: 2rem;
 $size-extra-large: 2.5rem;
 
 // color
-$color-havelock-blue  : #3f8ad8;
+$color-havelock-blue  : #576be6;
 $color-oslo-gray      : #8d9297;
 $color-polar          : #eaf6fb;
+$color-perfume        : #c1b7f9;
 $color-transparent    : transparent;
 $color-valencia       : #D63031;
 $color-white          : #fff;
@@ -18,11 +19,14 @@ $color-dark-blue      : #081dbb;
 $color-persian-pink   : #f06eaa;
 $color-red-ribbon     : #e80737;
 $color-caribbean-green: #08bba8;
-$color-black-20       : rgba(0,0,0,.2);
 $color-medium-gray    : #949596;
 $color-chocolate      : #d2691e;
 $color-wheat          : #f5deb3;
 $color-silver         : #c0c0c0;
+
+$color-black-20  : rgba(0, 0, 0,.2);
+$color-black-60  : rgba(0, 0, 0,.6);
+$color-perfume-60: rgba(193, 183, 249, .6);
 
 $color-bg-primary   : $color-polar;
 $color-error-primary: $color-valencia;

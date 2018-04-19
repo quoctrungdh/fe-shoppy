@@ -34,7 +34,7 @@ function getAllProduct(req, res) {
     return res.status(200).json(products);
   }
 
-  const mock = createProductMock(500);
+  const mock = createProductMock(50);
 
   storeHandler.set(mock);
 

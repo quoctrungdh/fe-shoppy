@@ -1,7 +1,7 @@
-import * as React from 'react';
+import agent from '../agent';
 
 interface Item {
-    sku     : string,
+    color   : string,
     size    : string,
     quantity: number,
     price   : number,
@@ -30,14 +30,20 @@ function Cart() {
             ...item,
             quantity: 1
         }
-
-        const itemIsFound = items.find((elm:Item) => (elm.sku === item.sku && elm.size === item.size))
+        const itemIsFound = items.find((elm:Item) => (elm.color === item.color && elm.size === item.size))
         if(itemIsFound) {
             itemIsFound.quantity = itemIsFound.quantity + 1;
         } else {
             items.push(itemToAdd);
         }
         notify();
+
+        // agent.Product.postAddToCart(item)
+        //     .then((res) => {
+        //         if(res.status = '200') {
+
+        //         }
+        //     })
     }
 
     function getItems() {
@@ -46,7 +52,7 @@ function Cart() {
 
     function removeItem(item:Item) {
         items = items.filter(elm => (
-            elm.size !== item.size || elm.sku !== item.sku
+            elm.size !== item.size || elm.color !== item.color
         ));
         notify();
     }

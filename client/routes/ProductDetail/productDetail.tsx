@@ -2,53 +2,12 @@ import * as React      from 'react';
 import * as classNames from 'classnames';
 import Slider          from 'react-slick';
 import cartService     from '../../services/cart';
-
-const data = {
-  "productId": "PD0001",
-  "name": "nike-001",
-	"description": "Nike, Inc. is an American multinational corporation that is engaged in the design, development, manufacturing, and worldwide marketing and sales of footwear, apparel, equipment, accessories, and services.",
-	"isFavorite": true,
-  "price": 500,
-  "sizes" : [37, 38, 39, 40],
-  "skus" : [
-    {
-      "sku": "sku001",
-      "imageUrl": require("../../assets/images/shoes1.png"),
-      "colorID": "M0001_0f0",
-    },
-    {
-			"sku": "sku002",
-			"imageUrl": require("../../assets/images/shoes1-pink.png"),
-      "colorID": "M0001_0ff",
-    },
-    {
-			"sku": "sku003",
-			"imageUrl": require("../../assets/images/shoes1.png"),
-      "colorID": "M0001_ff0",
-    },
-    {
-			"sku": "sku004",
-			"imageUrl": require("../../assets/images/shoes1-pink.png"),
-      "colorID": "M0001_000",
-    },
-    {
-			"sku": "sku005",
-			"imageUrl": require("../../assets/images/shoes1.png"),
-      "colorID": "M0001_0f0",
-    }
-  ]
-}
-
-// todo: fetch data from fake server
-// fetch('http://localhost:3001/products')
-// 	.then((data) => data.json())
-// 	.then(data => {
-// 		console.log(data)
-// 	})
+import agent           from '../../agent';
+import Loading         from '../../common/Loading';
 
 const settings = {
   dots          : false,
-  infinite      : false,
+  infinite      : true,
   speed         : 500,
   slidesToShow  : 3,
   slidesToScroll: 1,
@@ -61,55 +20,82 @@ const settings = {
   centerPadding : '8px',
 }
 
-interface ProductDetail {
-	selectedColor: string,
-	selectedSku  : string,
-	selectedSize : number,
-}
-
 interface IMyComponentProps {
   someDefaultValue?: string,
 }
-
 interface IMyComponentState {
 	imageUrl?: string,
-	dataAddCart: {
+	selectedProduct: {
 		productId: string,
-		sku      : string,
 		size     : number,
 		price    : number,
+		color    : string,
+		name     : string,
 	},
+	dataProduct: {}
+	isLoading  : boolean,
+	isRetried  : boolean,
 	totalCart  : object[],
+	error      : string,
+	isFavorite : boolean,
 }
 
 class ProductDetail extends React.Component<IMyComponentProps, IMyComponentState> {
 	constructor(props: IMyComponentProps) {
-    super(props);
+		super(props);
 		this.state = {
-			imageUrl: data.skus[0].imageUrl,
-			dataAddCart: {
-				productId: data.productId,
-				sku      : data.skus[0].sku,
-				size     : data.sizes[0],
-				price    : data.price,
-			},
-			totalCart: [],
+			isLoading : true,
+			error     : '',
+			totalCart : [],
+			isFavorite: false,
 		}
+	}
+
+	componentDidMount() {
+    const productId = this.getProductId();
+		agent.Product.getProductDetails(productId)
+			.then((data) => {
+				this.setState({
+					selectedProduct: {
+						productId: data.productId,
+						size     : data.sizes[0],
+						price    : data.price,
+						color    : data.colors[0].color,
+						name     : data.name,
+					},
+					dataProduct: data,
+					imageUrl   : data.colors[0].imageUrl,
+					isLoading  : false,
+					isRetried  : false,
+					isFavorite : data.isFavorite
+				})
+			})
+			.catch((error:any) => {
+				this.setState({
+					isLoading: false,
+					error: error.message,
+				})
+			})
+  }
+
+  getProductId = () => {
+    const id = this.props.match.params.id.substring(3);
+    return id;
   }
 
   onClickTochangeColor =(e: any) => {
-		e.preventDefault();
-		const colorID = e.target.innerText;
-		const selectedImg = data.skus.find((item:any) => {
-			return (item.colorID === colorID) ? item.imageUrl : '';
-		});
+    e.preventDefault();
+    const colorID = e.target.innerText;
+    const selectedImg = this.state.dataProduct.colors.find((item:any) => {
+      return (item.color === colorID) ? item.imageUrl : '';
+    });
 
-		const { imageUrl, sku } = selectedImg;
+		const { imageUrl, color } = selectedImg;
 		this.setState({
 			imageUrl,
-			dataAddCart: {
-				...this.state.dataAddCart,
-				sku
+			selectedProduct: {
+				...this.state.selectedProduct,
+				color
 			}
     });
   }
@@ -117,87 +103,100 @@ class ProductDetail extends React.Component<IMyComponentProps, IMyComponentState
 	onClickToChangeSize(e: any) {
 		e.preventDefault();
 		this.setState({
-			dataAddCart: {
-				...this.state.dataAddCart,
+			selectedProduct: {
+				...this.state.selectedProduct,
 				size: Number(e.target.innerText)
 			}
 		});
 	}
 
-	getColor(colorId: string) {
-		return colorId.split('_')[1];
-	}
-
 	onloadImage () {
-		return data.skus.map((item, index) => {
+		return this.state.dataProduct.colors.map((item, index) => {
 			const onStyle = {
-					backgroundColor: `#${this.getColor(item.colorID)}`
+				backgroundColor: `${item.color}`
 			}
 			return (
-				<div 
-					className={`item-color ${item.colorID}`} 
-					onClick={(e) => this.onClickTochangeColor(e)} 
+				<div
+					className={`item-color ${item.color}`}
+					onClick={(e) => this.onClickTochangeColor(e)}
 					key={index}>
-						<span style={onStyle}>{item.colorID}</span>
+						<span style={onStyle}>{item.color}</span>
 				</div>
 			)
 		})
 	}
 
 	addToCart() {
-		cartService.addToCart(this.state.dataAddCart);
+		cartService.addToCart(this.state.selectedProduct);
 	}
 
-  render() {
-    const favClass = classNames('favorite', {
-    	'active': data.isFavorite
+	render() {
+		const loadingClass = classNames('loading', {
+				'hidden': !this.state.isLoading
 		});
 
-    return (
-      <div>
-        <div className="product-detail">
-        	<div className="product-detail__info">
-        		<span className="product-detail__info__name">{data.name}</span>
-        		<span className={favClass}>Favorite</span>
-        		<span className="product-detail__info__price">$ {data.price}</span>
-        	</div>
+		const { dataProduct } = this.state;
 
-        	<div className="product-detail__image">
-        		<img src={this.state.imageUrl} alt={data.name} />
-        	</div>
+		const isFavoriteClass = classNames('favorite', {
+			active: dataProduct && dataProduct.isFavorite
+		})
 
-        	<div className="product-detail__options">
-        		<div className="product-detail__options__sizes">
-        			<span className="product-detail__options__title">choose size</span>
-        			<Slider {...settings}>
-        				{
-        					data.sizes.map((item, index) => {
-        						return <div className="item-size" key={index}><span onClick={(e) => this.onClickToChangeSize(e)}>{item}</span></div>
-        					})
-        				}
-        			</Slider>
-        		</div>
-        		<div className="product-detail__options__colors">
-        		  <span className="product-detail__options__title">choose color</span>
-        			<Slider {...settings}>
-        				{
-        					this.onloadImage()
-        				}
-        			</Slider>
-        		</div>
-        	</div>
+		return (
+			<div>
+				{
+					this.state.isLoading &&
+				  <Loading />
+				}
+				{
+					this.state.error &&
+					<div className="retry">{this.state.error}</div>
+				}
+				{
+					dataProduct &&
+					<div className="product-detail">
+						<div className="product-detail__info">
+							<span className="product-detail__info__name">{this.state.dataProduct.name}</span>
+							<span className={isFavoriteClass}>Favorite</span>
+							<span className="product-detail__info__price">$ {this.state.dataProduct.price}</span>
+						</div>
 
-        	<div className="product-detail__description">
-            {data.description}
-        	</div>
+						<div className="product-detail__image">
+							<img src={this.state.imageUrl} alt={this.state.dataProduct.name} />
+						</div>
 
-        	<div className="text-center">
-            <button onClick={() => this.addToCart()} className="btn add-cart">Add To Cart</button>
-        	</div>
-        </div>
-      </div>
-    );
-  }
+						<div className="product-detail__options">
+							<div className="product-detail__options__sizes">
+								<span className="product-detail__options__title">choose size</span>
+								<Slider {...settings}>
+									{
+										this.state.dataProduct.sizes.map((item, index) => {
+											return <div className="item-size" key={index}><span onClick={(e) => this.onClickToChangeSize(e)}>{item}</span></div>
+										})
+									}
+								</Slider>
+							</div>
+							<div className="product-detail__options__colors">
+								<span className="product-detail__options__title">choose color</span>
+								<Slider {...settings}>
+									{
+										this.onloadImage()
+									}
+								</Slider>
+							</div>
+						</div>
+
+						<div className="product-detail__description">
+							{this.state.dataProduct.description}
+						</div>
+
+						<div className="text-center">
+							<button onClick={() => this.addToCart()} className="btn add-cart">Add To Cart</button>
+						</div>
+					</div>
+				}
+			</div>
+		);
+	}
 }
 
 export default ProductDetail;

@@ -1,7 +1,8 @@
-html, body {
-	height: 100%;
+body {
 	font-family: 'Mukta Mahee', sans-serif;
 	font-size: 16px;
+  min-height: 100vh;
+  background: linear-gradient($color-polar, $color-perfume-60);
 }
 
 * {
@@ -47,6 +48,6 @@ a {
 }
 
 button {
-  	outline: 0;
-  	padding: .5rem 1rem;
+  outline: 0;
+  padding: .5rem 1rem;
 }

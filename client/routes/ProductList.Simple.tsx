@@ -41,8 +41,10 @@ const ProductListRender = ({ list, isShowGrid, onFavoriteClick, addToCart }) =>
         {list.map(item => <div className="flex-item text-center" key={item.productId}>
             <div className="product__box">
                 <p className="product__type">SHOE</p>
-                <h3 className="product__name">{item.name}</h3>
-                <img src={item.colors[0].imageUrl} alt={item.name} className="product__image" />
+                <Link to={`/product-detail/${item.productId}`}>
+                  <h3 className="product__name">{item.name}</h3>
+                  <img src={item.colors[0].imageUrl} alt={item.name} className="product__image" />
+                </Link>
                 <p className="product__price">${item.price}</p>
                 <button
                     className="product__favorite-icon product__top-icon"
@@ -71,18 +73,13 @@ export default class ProductListSimple extends React.Component {
     fetch(getProductsUrl)
       .then(response => response.json())
       .then(products => {
-          console.log(products, 'products')
           this.setState({ products })
       })
   }
 
-  addToCart = () => {
+  addToCart = () => { }
 
-  }
-
-  onFavoriteClick = () => {
-
-  }
+  onFavoriteClick = () => {  }
 
   render() {
     return (this.state.products && <ProductListRender
