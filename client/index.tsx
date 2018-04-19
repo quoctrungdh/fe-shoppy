@@ -13,6 +13,8 @@ import ProductList from './routes/ProductList';
 import NotFound from './routes/NotFound';
 import Promotions from './routes/Promotions/Promotions';
 import ProductDetail from './routes/ProductDetail/productDetail';
+import UserProfile from './routes/UserProfile';
+import EditProfile from './routes/EditProfile';
 
 import './style/index.scss';
 
@@ -66,6 +68,8 @@ ReactDOM.render(
 				<Route path="/about" component={About} />
 				<Route path="/promotions" component={Promotions} />
 				<Route path="/product-detail" component={ProductDetail} />
+				<Route path="/user-profile/edit" component={EditProfile} />
+				<AuthRoute path="/user-profile" component={UserProfile} />
 				<Route component={NotFound} />
 			</Switch>
 		</div>

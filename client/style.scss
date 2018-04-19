@@ -6,8 +6,8 @@
 @import 'routes/Promotions/promotions.scss';
 @import 'common/PromotionItem/promotionItem.scss';
 @import 'routes/ProductDetail/productDetail.scss';
-@import 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css';
-@import 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css';
+// @import "~slick-carousel/slick/slick.css";
+// @import "~slick-carousel/slick/slick-theme.css";
 
 // Normalizer
 h1,
@@ -18,50 +18,50 @@ h5,
 h6,
 p,
 body {
-  margin: 0;
-  padding: 0;
+	margin: 0;
+	padding: 0;
 }
 
 img {
-  max-width: 100%;
+	max-width: 100%;
 }
 
 a {
-  cursor: pointer;
-  text-decoration: none;
+	cursor: pointer;
+	text-decoration: none;
 
-  &:hover,
-  &:focus,
-  &:active {
-    text-decoration: none;
-  }
+	&:hover,
+	&:focus,
+	&:active {
+		text-decoration: none;
+	}
 }
 
 ul {
-  li {
-    list-style: none;
-  }
+	li {
+		list-style: none;
+	}
 }
 
 html {
-  font-size: 10px;
+	font-size: 10px;
 }
 
 body {
-  color: blue;
-  font-size: 1.6rem;
+	color: blue;
+	font-size: 1.6rem;
 }
 
 img {
-  max-width: 100%;
-  height: auto;
+	max-width: 100%;
+	height: auto;
 }
 
 * {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 button {
-  outline: 0;
-  padding: .5rem 1rem;
+	outline: 0;
+	padding: .5rem 1rem;
 }

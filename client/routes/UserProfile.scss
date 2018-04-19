@@ -1,0 +1,105 @@
+.user-profile {
+	position: relative;
+	text-align: center;
+
+	.wishlist-title {
+		font-size: 26px;
+		color: $color-havelock-blue;
+		margin: 30px 0;
+	}
+
+	.wishlist-item {
+		padding: 30px 20px;
+		outline: none;
+
+		img {
+			margin: 0 auto;
+		}
+
+		.prod-name {
+			display: block;
+			text-transform: uppercase;
+			font-size: 16px;
+			margin-bottom: 30px;
+		}
+
+		.prod-price {
+			display: block;
+			margin-top: 20px;
+			font-size: 18px;
+		}
+	}
+
+	.slick-slide {
+		position: relative;
+		padding: 40px 0;
+		z-index: 0;
+
+		> div {
+			box-shadow: 2px 0 3px rgba(0, 0, 0, 0.15);
+		}
+
+		&.slick-center {
+			position: relative;
+			z-index: 1;
+
+			.wishlist-item {
+				// padding: 0 20px;
+			}
+
+			> div {
+				box-shadow: none;
+
+				&::after {
+					content: '';
+					display: block;
+					position: absolute;
+					top: 10px;
+					bottom: 10px;
+					left: 0;
+					right: 0;
+					box-shadow: 2px 0 3px rgba(0, 0, 0, 0.15);
+					background: $color-white;
+					z-index: -1;
+				}
+			}
+		}
+	}
+
+	.slick-dots {
+		margin-top: 10px;
+
+		li {
+			button {
+				&:before {
+					content: '';
+					width: 15px;
+					height: 15px;
+					background: $color-havelock-blue;
+					border-radius: 100%;
+				}
+			}
+		}
+	}
+}
+
+.user-image {
+	border-radius: 100%;
+	overflow: hidden;
+	width: 150px;
+	margin-bottom: 30px;
+}
+
+.username {
+	text-transform: uppercase;
+}
+
+.edit-icon {
+	position: absolute;
+	top: 0;
+	left: 40px;
+	width: 25px;
+	height: 25px;
+	background: url($icon-edit) no-repeat;
+	background-size: cover;
+}

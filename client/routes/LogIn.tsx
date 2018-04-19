@@ -21,10 +21,6 @@ interface LoginProp {
 	handleChange(): void,
 	handleBlur(): void,
 	errors: {
-		username: string,
-		email: string,
-		password: string,
-		passwordConfirm: string,
 		message: string
 	},
 	handleSubmit(): void,
@@ -53,7 +49,7 @@ function LogInInnerForm({
 				name="email"
 				value={values.email}
 				onChange={handleChange}
-				placeholder="Username"
+				placeholder="Email"
 			/>
 			<Input
 				type="password"
@@ -86,8 +82,8 @@ const LogInForm = withFormik({
 
 		Agent.Auth
 			.login(loginInfo)
-			.then((userInfo: object) => {
-				authenService.setUserInfo(userInfo);
+			.then((data) => {
+				authenService.setUserInfo(data.token);
 				history.push(referrerRoute);
 			})
 			.catch((err: object) => { setErrors(err); });

@@ -4,6 +4,13 @@ import Agent from '../agent';
 import authenService from '../authenService';
 
 class GoogleLogin extends React.Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			token: ''
+		}
+	}
 	componentDidMount() {
 		var e = document.createElement("script");
 		e.type = "text/javascript";
@@ -17,22 +24,44 @@ class GoogleLogin extends React.Component {
 	handleGoogleLogin = () => {
 		const ggLoginResponse = Agent.Auth.loginGoogle();
 		ggLoginResponse.signIn()
-			.then(() => {
+			.then((res) => {
 				const userInfo = {
 					name: ggLoginResponse.currentUser.get().getBasicProfile().getName(),
-					role: 'customer'
-				}
-				this.props.history.push('/');
-				authenService.setUserInfo(userInfo);
+					imageUrl: ggLoginResponse.currentUser.get().getBasicProfile().getImageUrl()
+				};
+				this.handleGoogleLoginServer(res.getAuthResponse().id_token);
 			})
 			.catch((err) => {
-				alert(err.error);
+				console.log(err.error);
 			})
+	}
+
+	handleGoogleLoginServer(token) {
+		// fetch('http://localhost:3000/api/auth/gg-login', {
+		// 	body: JSON.stringify({token}), // must match 'Content-Type' header
+		// 	headers: {
+		// 		'content-type': 'application/json'
+		// 	},
+		// 	method: 'POST',
+		// })
+		// .then(res => res.json())
+		// .then(data => {
+		// 	authenService.setUserInfo(data.token);
+		// 	this.props.history.push('/');
+		// })
+		// .catch(err => console.log(err));
+		Agent.Auth
+			.loginGoogleServer(token)
+			.then(data => {
+				authenService.setUserInfo(data.token);
+				this.props.history.push('/');
+			})
+			.catch(err => console.log(err));
 	}
 
 	render() {
 		return (
-			<div className="g-signin2" onClick={ () => this.handleGoogleLogin() }></div>
+			<div className="g-signin2" onClick={this.handleGoogleLogin}></div>
 		)
 	}
 }

@@ -6,19 +6,44 @@ interface RequestParams {
 	username: string,
 	email: string,
 	password: string,
-	passwordConfirm: string
+	passwordConfirm: string,
+	token: string
 }
 
 const { fetch } = window;
 
+const catchError = (data) => {
+	if (data.auth) {
+		return data;
+	}
+	throw new Error(data.message);
+}
+
+const parseJSON = (res) => {
+	return res.json();
+}
+
 const request = {
-	get: (url: RequestParams) => fetch(baseURL + url, {
-		method: 'get',
-	}),
-	post: ({url, body}: RequestParams) => fetch(baseURL + url, {
-		method: 'post',
-		body: JSON.stringify(body),
-	}),
+	get: ({ url, token }: RequestParams) => {
+		return fetch(baseURL + url, {
+			method: 'get',
+			headers: {
+				'x-access-token': token
+			}
+		})
+		.then(res => res.json())
+	},
+	post: ({url, body}: RequestParams) => {
+		return fetch(baseURL + url, {
+			method: 'post',
+			body: JSON.stringify(body),
+			headers: {
+				'content-type': 'application/json'
+			},
+		})
+		.then(parseJSON)
+		.then(catchError)
+	},
 	// put: (url) => {
 
 	// },
@@ -30,27 +55,31 @@ const request = {
 // https://addyosmani.com/resources/essentialjsdesignpatterns/book/#modulepatternjavascript
 
 const Auth = {
-	register: ({username, email, password}: RequestParams) => request.post('/users', { user: { username, email, password } }),
-	// login: user => request.post('/users/login', user),
-	login: ({ email, password }: RequestParams) => {
-		if (email === 'admin@shoppy.com' && password === 'admin') {
-			const userInfo = {
-				name: 'shoppy',
-				role: 'admin',
-			};
-
-			return Promise.resolve(userInfo);
-		}
-		return Promise.reject(new Error('Auth failed'));
-	},
+	register: ({username, email, password}: RequestParams) => request.post({
+		url: 'api/auth/register',
+		body: { username, email, password },
+	}),
+	login: ({ email, password }: RequestParams) => request.post({
+		url: 'api/auth/login',
+		body: { email, password }
+	}),
+	getUser: (token: string) => request.get({
+		url: 'api/auth/me',
+		token: token
+	}),
 	loginGoogle: () => {
 		return gapi.auth2.getAuthInstance();
-	}
+	},
+	loginGoogleServer: (token) => request.post({
+		url: 'api/auth/gg-login',
+		body: {token}
+	})
 };
 
 
 export default {
 	Auth,
+	request
 };
 
 // https://github.com/gothinkster/react-redux-realworld-example-app/blob/master/src/agent.js

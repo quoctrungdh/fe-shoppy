@@ -23,7 +23,8 @@ interface RegisterProp {
 		username: string,
 		email: string,
 		password: string,
-		passwordConfirm: string
+		passwordConfirm: string,
+		message: string,
 	},
 	handleSubmit(): void,
 	touched: {
@@ -71,6 +72,10 @@ function RegisterInnerForm({
 			<Button>
 				REGISTER
 			</Button>
+			{
+				errors &&
+				<ErrorMessage>{errors.message}</ErrorMessage>
+			}
 		</form>
 	);
 }
@@ -86,10 +91,10 @@ const RegisterForm = withFormik({
 		username: Yup.string().required('Username is required'),
 		email: Yup.string().email("Email isn't valid").required('Email is required!'),
 		password: Yup.string()
-			.min(9, 'Password must be 9 characters or longer')
-			.matches(/[a-z]/, 'at least one lowercase characters')
-			.matches(/[A-Z]/, 'at least one uppercase characters')
-			.matches(/[a-zA-Z]+[^a-zA-Z\s]/, 'at least 1 number or special characters')
+			.min(4, 'Password must be 4 characters or longer')
+			// .matches(/[a-z]/, 'at least one lowercase characters')
+			// .matches(/[A-Z]/, 'at least one uppercase characters')
+			// .matches(/[a-zA-Z]+[^a-zA-Z\s]/, 'at least 1 number or special characters')
 			.required('Password is required!'),
 		passwordConfirm: Yup.string()
 			.oneOf([Yup.ref('password'), null], "password don't match")
@@ -97,13 +102,13 @@ const RegisterForm = withFormik({
 	}),
 	handleSubmit: (registerInfo, { props, setErrors }) => {
 		const { history }: any = props;
-
-		Agent.Auth
-			.register(registerInfo)
-			.then(() => {
-				history.push('/login');
-			})
-			.catch((err: object) => { setErrors(err); });
+		console.log(history, 'history')
+		// Agent.Auth
+		// 	.register(registerInfo)
+		// 	.then(() => {
+		// 		history.push('/login');
+		// 	})
+		// 	.catch((err: object) => { setErrors(err); });
 	}
 })(RegisterInnerForm)
 

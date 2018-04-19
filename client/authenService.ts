@@ -24,9 +24,7 @@ const authenService = {
 		listeners.push(listener);
 	},
 	unsubscribe: (listener: any) => {
-		return function removeListener() {
-			listeners = listeners.filter((l: () => void) => l !== listener);
-		};
+		return listeners = listeners.filter((l: () => void) => l !== listener);
 	},
 };
 
