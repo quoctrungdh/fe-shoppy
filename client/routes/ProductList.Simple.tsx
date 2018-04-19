@@ -1,6 +1,6 @@
 //Lib
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link  } from 'react-router-dom';
 import { compose } from 'recompose';
 
 //Component
@@ -34,15 +34,15 @@ interface Product {
 const getProductsUrl = `http://localhost:12346/products`;
 
 // component danh sách sản phẩm, sử dụng các prop truyền vào ở trên
-const ProductListRender = ({ list, isShowGrid, onFavoriteClick, addToCart }) =>
+const ProductListRender = ({ list, isShowGrid, onFavoriteClick, addToCart, goToProductDetail }) =>
     <div
         className={`flex ${isShowGrid ? 'row': ''}`}
     >
         {list.map(item => <div className="flex-item text-center" key={item.productId}>
             <div className="product__box">
                 <p className="product__type">SHOE</p>
-                <h3 className="product__name">{item.name}</h3>
-                <img src={item.colors[0].imageUrl} alt={item.name} className="product__image" />
+                <h3 className="product__name" onClick={() => goToProductDetail(item.productId)}>{item.name}</h3>
+                <img src={item.colors[0].imageUrl} alt={item.name} className="product__image" onClick={() => goToProductDetail(item.productId)} />
                 <p className="product__price">${item.price}</p>
                 <button
                     className="product__favorite-icon product__top-icon"
@@ -71,7 +71,6 @@ export default class ProductListSimple extends React.Component {
     fetch(getProductsUrl)
       .then(response => response.json())
       .then(products => {
-          console.log(products, 'products')
           this.setState({ products })
       })
   }
@@ -82,6 +81,10 @@ export default class ProductListSimple extends React.Component {
 
   onFavoriteClick = () => {
 
+	}
+
+  goToProductDetail = (productId) => {
+    window.location.href = `http://localhost:1234/product-detail/${productId}`;
   }
 
   render() {
@@ -90,6 +93,7 @@ export default class ProductListSimple extends React.Component {
       isShowGrid={true}
       onFavoriteClick={this.onFavoriteClick}
       addToCart={this.addToCart}
+      goToProductDetail={this.goToProductDetail}
     />)
   }
 }

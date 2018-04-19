@@ -1,4 +1,4 @@
-const baseURL = 'http://localhost:3000/';
+const baseURL = 'http://localhost:12346';
 
 interface RequestParams {
 	url: string,
@@ -48,9 +48,17 @@ const Auth = {
 	}
 };
 
+const Product = {
+	getProductDetails(productId :string) {
+		return request.get('/products')
+			.then(data => data.json())
+			.then(data => data[productId])
+	}
+}
 
 export default {
 	Auth,
+	Product
 };
 
 // https://github.com/gothinkster/react-redux-realworld-example-app/blob/master/src/agent.js

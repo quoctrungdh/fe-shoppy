@@ -3,8 +3,9 @@ import cartService from '../services/cart'
 import * as classNames from 'classnames';
 
 interface Item {
-    sku     : string,
+    item    : string,
     size    : string,
+    color   : string,
     quantity: number,
     price   : number,
 }
@@ -39,7 +40,7 @@ class Cart extends React.Component {
     removeItem = (item:Item, e:any) => {
         e.stopPropagation();
         const totalItem = cartService.removeItem(item);
-        
+
     }
 
     render() {
@@ -49,8 +50,9 @@ class Cart extends React.Component {
         const items = totalItem.map((item:Item, index) => {
             return (
                 <tr className='item' key={index}>
-                    <td><a href='#'>{item.sku}</a></td>
+                    <td><a href='#'>{item.name}</a></td>
                     <td><a href='#'>{item.size}</a></td>
+                    <td><a href='#'>{item.color}</a></td>
                     <td><a href='#'>{item.quantity}</a></td>
                     <td><a href='#'>{item.price * item.quantity}</a></td>
                     <td className='cart__remove'><span onClick={(e) => this.removeItem(item, e)}>X</span></td>
@@ -65,7 +67,7 @@ class Cart extends React.Component {
         const cartClass = classNames('cart', {
             open: this.state.isToggleOpen
         })
-        
+
         return (
             <div className={cartClass} onClick={this.toggleOpen}>
                 <span className="cart__icon">
@@ -79,6 +81,7 @@ class Cart extends React.Component {
                                 <tr>
                                     <th>Name</th>
                                     <th>Size</th>
+                                    <th>Color</th>
                                     <th>Quantity</th>
                                     <th>Price</th>
                                     <th>Remove</th>
