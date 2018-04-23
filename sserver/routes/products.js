@@ -22,6 +22,7 @@ function createProductMock(mockNumber) {
     price: faker.commerce.price(),
     sizes: getSizes(faker.random.arrayElement([2, 3, 4, 5, 6, 7])),
     colors: getColor(faker.random.arrayElement([2, 3, 4, 5, 6, 7])),
+    pintop: faker.random.boolean(),
   }));
 
   return mock;
